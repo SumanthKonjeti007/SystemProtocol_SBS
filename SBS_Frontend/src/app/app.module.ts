@@ -21,6 +21,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { ToastrModule } from 'ngx-toastr';
 
 //import { HeaderComponent } from './components/header/header.component';
 
@@ -34,6 +35,7 @@ import { OtpVerificationComponent } from './otp-verification/otp-verification.co
 import { AdminComponent } from './components/user/admin.component';
 import { CommonModule } from '@angular/common';
 import { AccountComponent } from './components/account/account.component';
+import { IntuserheaderComponent } from './intuserheader/intuserheader.component';
 
 //import { TfInstantComponent } from './components/tf-instant/tf-instant.component';
 //import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -63,7 +65,8 @@ import { AccountComponent } from './components/account/account.component';
     InternalUserHomeComponent,
     UpdateComponent,
     UserDetailsComponent,
-    OtpVerificationComponent
+    OtpVerificationComponent,
+    IntuserheaderComponent
 
   ],
   imports: [
@@ -77,6 +80,7 @@ import { AccountComponent } from './components/account/account.component';
     HttpClientModule,
     CommonModule,
     //NgbModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
