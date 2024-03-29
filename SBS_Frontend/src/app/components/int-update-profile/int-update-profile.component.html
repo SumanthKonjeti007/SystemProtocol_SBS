@@ -1,24 +1,73 @@
+<app-intheader></app-intheader>
 <div class="profile-container" *ngFor="let request of profileRequestsList">
-    <h2>Current Profile:</h2>
-    <ul>
-      <li><strong>Username:</strong> {{ request.user.username }}</li>
-      <li><strong>First Name:</strong> {{ request.user.firstName }}</li>
-      <li><strong>Last Name:</strong> {{ request.user.lastName }}</li>
-      <li><strong>Email:</strong> {{ request.user.emailAddress }}</li>
-      <li><strong>Address:</strong> {{ request.user.address }}</li>
-      <li><strong>Phone Number:</strong> {{ request.user.phoneNumber }}</li>
-    </ul>
-  
-    <h2>Requested Changes:</h2>
-    <ul>
-      <li><strong>First Name:</strong> {{ getRequestedValue(request.updateData, 'firstName') }}</li>
-      <li><strong>Last Name:</strong> {{ getRequestedValue(request.updateData, 'lastName') }}</li>
-      <li><strong>Email:</strong> {{ getRequestedValue(request.updateData, 'emailAddress') }}</li>
-      <li><strong>Address:</strong> {{ getRequestedValue(request.updateData, 'address') }}</li>
-      <li><strong>Phone Number:</strong> {{ getRequestedValue(request.updateData, 'phoneNumber') }}</li>
-    </ul>
-  
-    <button (click)="approveRequest(request.id)">Approve</button>
-    <button (click)="rejectRequest(request.id)">Reject</button>
+  <div class="dropdown open">
+    <h3> Profile change request for {{ request.user.username }} </h3>
+    <div class="dropdown-content">
+      <table class="profile-table">
+        <tr>
+          <td><strong>Current Profile</strong></td>
+          <td><strong>Requested Changes</strong></td>
+         
+        </tr>
+        <tr>
+          <td>
+            <table>
+              <!-- <tr>
+                <td><strong>Username:</strong></td>
+                <td>{{ request.user.username }}</td>
+              </tr> -->
+              <tr>
+                <td><strong>First Name:</strong></td>
+                <td>{{ request.user.firstName }}</td>
+              </tr>
+              <tr>
+                <td><strong>Last Name:</strong></td>
+                <td>{{ request.user.lastName }}</td>
+              </tr>
+              <tr>
+                <td><strong>Email:</strong></td>
+                <td>{{ request.user.emailAddress }}</td>
+              </tr>
+              <tr>
+                <td><strong>Address:</strong></td>
+                <td>{{ request.user.address }}</td>
+              </tr>
+              <tr>
+                <td><strong>Phone Number:</strong></td>
+                <td>{{ request.user.phoneNumber }}</td>
+              </tr>
+            </table>
+          </td>
+          <td>
+            <table>
+              <tr>
+                <td><strong>First Name:</strong></td>
+                <td>{{ getRequestedValue(request.updateData, 'firstName') }}</td>
+              </tr>
+              <tr>
+                <td><strong>Last Name:</strong></td>
+                <td>{{ getRequestedValue(request.updateData, 'lastName') }}</td>
+              </tr>
+              <tr>
+                <td><strong>Email:</strong></td>
+                <td>{{ getRequestedValue(request.updateData, 'emailAddress') }}</td>
+              </tr>
+              <tr>
+                <td><strong>Address:</strong></td>
+                <td>{{ getRequestedValue(request.updateData, 'address') }}</td>
+              </tr>
+              <tr>
+                <td><strong>Phone Number:</strong></td>
+                <td>{{ getRequestedValue(request.updateData, 'phoneNumber') }}</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <div class="button-container">
+        <button class="approve-btn" (click)="approveRequest(request.id)">Approve</button>
+        <button class="reject-btn" (click)="rejectRequest(request.id)">Reject</button>
+      </div>
+    </div>
   </div>
-  
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileRequestsService } from '../../services/profile-requests.service';
+import { decodeToken } from '../../util/jwt-helper';
 
 @Component({
   selector: 'app-int-update-profile',
@@ -7,10 +8,14 @@ import { ProfileRequestsService } from '../../services/profile-requests.service'
   styleUrls: ['./int-update-profile.component.css']
 })
 export class IntUpdateProfileComponent implements OnInit {
+  token: string | undefined;
+  decodedToken: any | null;
   constructor(private profileRequestsService: ProfileRequestsService) {}
   profileRequestsList: any[] | undefined;
 
   ngOnInit(): void {
+    this.token = localStorage.getItem('jwtToken') || '{}';
+     this.decodedToken = decodeToken(this.token);
     this.fetchProfileRequests();
   }
 
@@ -33,12 +38,71 @@ export class IntUpdateProfileComponent implements OnInit {
     }
     return '';
   }
-
-  approveRequest(requestId: number): void {
-    // Implement approval logic here
+  toggleDetails(request: any): void {
+    request.showDetails = !request.showDetails;
   }
+  
+  approveRequest(requestId: number): void {
+    const request = this.profileRequestsList?.find(req => req.id === requestId);
+    console.log(request);
+    if (!request) {
+      console.error('Request not found:', requestId);
+      return;
+    }
+  
+    const approveData = {
+      id: requestId,
+      user: {
+        userId: request.user.id,
+      },
+      approver: {
+        userId: this.decodedToken.userId // Assuming 6 is the ID of the approving user
+      },
+      updateData: request.updateData,
+      approvalStatus: "APPROVED"
+    };
+    console.log(approveData);
+    this.profileRequestsService.updateUserProfile(approveData).subscribe(
+      () => {
+        console.log('Profile request approved successfully');
+        // Optional: Refresh the list of pending requests
+        this.fetchProfileRequests();
+      },
+      (error: any) => {
+        console.error('Failed to approve profile request:', error);
+      }
+    );
+  }
+  
 
   rejectRequest(requestId: number): void {
-    // Implement rejection logic here
+    const request = this.profileRequestsList?.find(req => req.id === requestId);
+    if (!request) {
+      console.error('Request not found:', requestId);
+      return;
+    }
+  
+    const approveData = {
+      id: requestId,
+      user: {
+        userId: request.user.id,
+      },
+      approver: {
+        userId: this.decodedToken.userId // Assuming 6 is the ID of the approving user
+      },
+      updateData: request.updateData,
+      approvalStatus: "REJECTED"
+    };
+  
+    this.profileRequestsService.updateUserProfile(approveData).subscribe(
+      () => {
+        console.log('Profile request approved successfully');
+        // Optional: Refresh the list of pending requests
+        this.fetchProfileRequests();
+      },
+      (error: any) => {
+        console.error('Failed to approve profile request:', error);
+      }
+    );
   }
 }

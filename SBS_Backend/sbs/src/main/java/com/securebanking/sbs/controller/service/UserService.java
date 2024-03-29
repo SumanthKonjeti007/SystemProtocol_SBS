@@ -88,7 +88,7 @@ public class UserService implements Iuser {
         return otp.toString();
     }
 
-    public UserDto login(String username, String password) throws InvalidCredentialsException {
+    public UserDto login(String username, String password) throws Exception {
         User user = userRepo.findByUsername(username);
         UserDto userDto = new UserDto();
         UserRoleDto userRoleDto = new UserRoleDto();
@@ -98,6 +98,9 @@ public class UserService implements Iuser {
         }
         if (!password.equals(user.getPasswordHash())) {
             throw new InvalidCredentialsException("Invalid password");
+        }
+        if (user.getStatus().equals("Inactive")) {
+            throw new Exception("Inactive user");
         }
         BeanUtils.copyProperties(user,userDto);
         userRoleDto.setRoleId(user.getRole().getRoleId());
