@@ -36,13 +36,19 @@ import { AdminComponent } from './components/user/admin.component';
 import { CommonModule } from '@angular/common';
 import { AccountComponent } from './components/account/account.component';
 import { IntuserheaderComponent } from './intuserheader/intuserheader.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import { TfInstantComponent } from './components/tf-instant/tf-instant.component';
 //import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 //import { NgModule } from '@angular/core';
 //import { ReactiveFormsModule } from '@angular/forms';
 //import { UpdateComponent } from './path-to-your-update-component/update.component'; // Update the path
 //import { ProfileComponent } from './profile/profile.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,8 +87,14 @@ import { IntuserheaderComponent } from './intuserheader/intuserheader.component'
     CommonModule,
     //NgbModule,
     ToastrModule.forRoot(),
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
