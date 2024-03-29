@@ -1,0 +1,24 @@
+<div class="profile-container" *ngFor="let request of profileRequestsList">
+    <h2>Current Profile:</h2>
+    <ul>
+      <li><strong>Username:</strong> {{ request.user.username }}</li>
+      <li><strong>First Name:</strong> {{ request.user.firstName }}</li>
+      <li><strong>Last Name:</strong> {{ request.user.lastName }}</li>
+      <li><strong>Email:</strong> {{ request.user.emailAddress }}</li>
+      <li><strong>Address:</strong> {{ request.user.address }}</li>
+      <li><strong>Phone Number:</strong> {{ request.user.phoneNumber }}</li>
+    </ul>
+  
+    <h2>Requested Changes:</h2>
+    <ul>
+      <li><strong>First Name:</strong> {{ getRequestedValue(request.updateData, 'firstName') }}</li>
+      <li><strong>Last Name:</strong> {{ getRequestedValue(request.updateData, 'lastName') }}</li>
+      <li><strong>Email:</strong> {{ getRequestedValue(request.updateData, 'emailAddress') }}</li>
+      <li><strong>Address:</strong> {{ getRequestedValue(request.updateData, 'address') }}</li>
+      <li><strong>Phone Number:</strong> {{ getRequestedValue(request.updateData, 'phoneNumber') }}</li>
+    </ul>
+  
+    <button (click)="approveRequest(request.id)">Approve</button>
+    <button (click)="rejectRequest(request.id)">Reject</button>
+  </div>
+  

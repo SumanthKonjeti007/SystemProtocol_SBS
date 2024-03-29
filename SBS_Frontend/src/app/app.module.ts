@@ -35,7 +35,7 @@ import { Observable } from 'rxjs';
 import { TransactionActionComponent } from './components/transaction-action/transaction-action.component';
 //import { CapitalizePipe } from './capitalize.pipe';
 //import { InternalUserHomeComponent } from './components/internal-user-home/internal-user-home.component';
-import { OtpVerificationComponent } from './otp-verification/otp-verification.component';
+import { OtpVerificationComponent } from './components/otp-verification/otp-verification.component';
 //import { IntuserheaderComponent } from './components/intuserheader/intuserheader.component';
 import { AdminComponent } from './components/user/admin.component';
 import { CommonModule } from '@angular/common';
@@ -51,6 +51,7 @@ import { TransactionListModule } from './components/transaction-list/transaction
 //import { ReactiveFormsModule } from '@angular/forms';
 //import { UpdateComponent } from './path-to-your-update-component/update.component'; // Update the path
 //import { ProfileComponent } from './profile/profile.component';
+import { IntUpdateProfileComponent } from './components/int-update-profile/int-update-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,8 +74,7 @@ import { TransactionListModule } from './components/transaction-list/transaction
     UserDetailsComponent,
     OtpVerificationComponent,
     CapitalizePipe,
-    
-
+    IntUpdateProfileComponent,
   ],
   imports: [
     BrowserModule,

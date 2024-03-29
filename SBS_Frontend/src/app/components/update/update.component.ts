@@ -4,7 +4,8 @@ import { UserService } from '../../services/user.service'; // Update with the co
 import { ReactiveFormsModule } from '@angular/forms';
 import { decodeToken } from '../../util/jwt-helper';
 import { Router } from '@angular/router';
-
+import { FormsModule } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-update-component',
   templateUrl: './update.component.html',
