@@ -54,7 +54,7 @@ export class OtpVerificationComponent implements OnInit {
             this.router.navigate(['/intuser-home']);
           }
             else if (decodedToken.role === 4) {
-              this.router.navigate(['/admin']);
+              this.router.navigate(['/home-admin']);
             
           }
           

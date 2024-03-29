@@ -20,6 +20,9 @@ export class ProfileRequestsService {
     return this.http.get<transaction[]>(`${this.baseUrl}transaction/pendingProfileRequests`);
   }
 
-
+  updateUserProfile(data: any): Observable<any> {
+    const url = `${this.baseUrl}transaction/updateUserProfile`;
+    return this.http.post(url, data);
+  }
 
 }

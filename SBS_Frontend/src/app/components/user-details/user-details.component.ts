@@ -22,7 +22,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     this.fetchUserDetails();
 
     // Fetch user details every 10 seconds (adjust the interval as needed)
-    interval(10000)
+    interval(10)
       .pipe(
         takeUntil(this.unsubscribe$),
         switchMap(() => this.fetchUserDetails())

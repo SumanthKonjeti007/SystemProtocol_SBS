@@ -35,6 +35,7 @@ export class UpdateComponent implements OnInit {
       email: [this.userData.emailAddress, [Validators.required, Validators.email]],
       address: [this.userData.address],
       phoneNumber: [this.userData.phoneNumber]
+      
       // Add more form controls as needed
     });
   }
@@ -49,9 +50,13 @@ export class UpdateComponent implements OnInit {
         lastName: this.updateForm.value.lastName,
         emailAddress: this.updateForm.value.email,
         address: this.updateForm.value.address,
-        phoneNumber: this.updateForm.value.phoneNumber
+        phoneNumber: this.updateForm.value.phoneNumber,
+        role:{
+          roleId: this.decodedToken.role
+        }
         // Add more fields as needed
       };
+      console.log(this.decodedToken);
       const userDetails: any = {
         user:{
           userId: this.decodedToken.userId 
