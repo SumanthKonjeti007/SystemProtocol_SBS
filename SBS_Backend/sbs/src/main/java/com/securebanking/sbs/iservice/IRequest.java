@@ -20,4 +20,5 @@ public interface IRequest {
     public List<UserProfileUpdateRequestDto> getPendingUpdateRequests();
 
     public List<Transaction> getAllTransactions();
+    public List<Transaction> getAllTransactionsUsingSenderId(Integer id);
 }

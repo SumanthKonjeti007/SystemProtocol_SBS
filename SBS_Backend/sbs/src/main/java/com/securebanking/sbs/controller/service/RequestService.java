@@ -212,7 +212,7 @@ public TransactionDto createTransactionRequest(TransactionDto transactionDto) {
 
     public TransactionAuthorizationDto approveTransactionRequest(TransactionAuthorizationDto transactionAuthorizationDto) {
         TransactionAuthorization transactionAuthorization = new TransactionAuthorization();
-        transactionAuthorization=transactionAuthorizationRepo.findById(transactionAuthorizationDto.getAuthorizationId()).get();
+        transactionAuthorization= transactionAuthorizationRepo.findByTransactionId(transactionAuthorizationDto.getTransaction().getTransactionId());
         Transaction transaction=transactionRepo.findById(transactionAuthorization.getTransaction().getTransactionId()).get();
         if (transaction.getStatus().equals(RequestStatus.PENDING.toString())  && transactionAuthorization.getStatus().equals(ApprovalStatus.PENDING.toString())){
             User approver = userRepo.findByUsername(transactionAuthorizationDto.getUser().getUsername());
@@ -250,7 +250,7 @@ public TransactionDto createTransactionRequest(TransactionDto transactionDto) {
     public TransactionAuthorizationDto rejectTransactionRequest(TransactionAuthorizationDto transactionAuthorizationDto) {
 
         TransactionAuthorization transactionAuthorization = new TransactionAuthorization();
-        transactionAuthorization=transactionAuthorizationRepo.findById(transactionAuthorizationDto.getAuthorizationId()).get();
+        transactionAuthorization= transactionAuthorizationRepo.findByTransactionId(transactionAuthorizationDto.getTransaction().getTransactionId());
         Transaction transaction=transactionRepo.findById(transactionAuthorization.getTransaction().getTransactionId()).get();
         if (transaction.getStatus().equals(RequestStatus.PENDING.toString())  && transactionAuthorization.getStatus().equals(ApprovalStatus.PENDING.toString())){
             User approver = userRepo.findByUsername(transactionAuthorizationDto.getUser().getUsername());
@@ -284,6 +284,9 @@ public TransactionDto createTransactionRequest(TransactionDto transactionDto) {
 //        });
 
         return transactions;
+    }
+    public List<Transaction> getAllTransactionsUsingSenderId(Integer id) {
+        return transactionRepo.findAllTransactionsByAccountId(id);
     }
 }
 

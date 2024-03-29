@@ -90,4 +90,9 @@ public class RequestController {
 //        return requestService.ApproveProfileRequest(userProfileUpdateRequestDto);
 //
 //    }
+    @GetMapping("/allTransaction")
+    @CrossOrigin(origins = "*")
+    public List<Transaction> getAllTransactionsUsingSenderId(@RequestParam Integer userId) {
+        return requestService.getAllTransactionsUsingSenderId(userId);
+}
 }

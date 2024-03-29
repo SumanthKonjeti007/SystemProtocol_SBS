@@ -14,4 +14,7 @@ public interface TransactionRepo extends JpaRepository<Transaction, Integer> {
 
     @Query("SELECT t FROM Transaction t WHERE t.senderAcc = :account AND t.status = :status")
     List<Transaction> findByAccountAndStatus(@Param("account") Account account, @Param("status") String status);
+
+    @Query("SELECT t FROM Transaction t WHERE t.user.userId = :id")
+    List<Transaction> findAllTransactionsByAccountId(Integer id);
 }

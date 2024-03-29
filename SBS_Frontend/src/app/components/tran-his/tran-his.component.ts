@@ -1,16 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+//import {TransactionService } from './transaction.service';
+import { TransactionService } from '../../services/transaction.service';
+import { transaction } from '../../services/transaction';
+import { decodeToken } from '../../util/jwt-helper';
 
 @Component({
   selector: 'app-tran-his',
   templateUrl: './tran-his.component.html',
-  styleUrl: './tran-his.component.css'
+  styleUrls: ['./tran-his.component.css']
 })
-export class TranHisComponent {
-  transactions: any[] = [
-    { date: '2022-03-01', description: 'Online Purchase', amount: -50.0 },
-    { date: '2022-03-05', description: 'Salary Deposit', amount: 1500.0 },
-    { date: '2022-03-10', description: 'ATM Withdrawal', amount: -100.0 },
-    // Add more transactions as needed
-  ];
+export class TranHisComponent implements OnInit {
+  transactions: transaction[] = [];
+   
+  token: string | undefined;
+  decodedToken: any;
 
+  constructor(private transactionService: TransactionService) { }
+
+  ngOnInit(): void {
+    this.token = localStorage.getItem('jwtToken') || '{}';
+      
+        this.decodedToken = decodeToken(this.token)
+    this.transactionService.getAllTransactions(this.decodedToken.userId).subscribe(
+      (transactions: transaction[]) => {
+        this.transactions = transactions;
+        console.log(this.transactions)
+      },
+      (error: any) => {
+        console.error('Error fetching transactions:', error);
+      }
+    );
+  }
 }
+

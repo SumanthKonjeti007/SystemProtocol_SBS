@@ -1,101 +1,80 @@
-
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: -webkit-linear-gradient(to right, #155799, #159957);  
-    background: linear-gradient(to right, #155799, #159957);
-    /*background-image: url("mountain.jpg");*/
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #EFF5F5; /* Updated to light, airy shade for a calming background */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
-    color: #ffffff;
 }
 
 .login-container {
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 360px;
-    background-color: #ff8f5e;
-
-    /*background: -webkit-linear-gradient(to right, #155799, #159957);  
-    background: linear-gradient(to right, #155799, #159957); 
-    color:whitesmoke;*/
+    padding: 60px; /* Retained spacious padding for an inviting look */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+    background-color: #D6E4E5; /* Updated to a slightly deeper tone for warmth */
+    color: #497174; /* Updated to deep teal for text, enhancing contrast */
+    margin: 20px;
 }
 
-.login-container h1 {
-    margin-top: 0;
-    margin-bottom: 1rem;
+.login-container h1, .login-container h3 {
+    color: #497174; /* Updated to deep teal for headings, enhancing focus */
     text-align: center;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #ffffff;
+    margin-bottom: 24px; /* Consistent margin for clean spacing */
 }
 
-h3 {
-    text-align: center;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #ffffff;
+.field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #497174; /* Updated to deep teal for labels, enhancing readability */
 }
 
-input[type="text"],
-input[type="password"] {
+.field input {
     width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.9rem;
-    color: #000000;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 2px solid #497174; /* Deep teal for input borders, drawing attention */
+    border-radius: 4px;
+    background-color: #EFF5F5; /* Light, airy shade for input background, softening the design */
+    color: #497174; /* Deep teal for input text, ensuring legibility */
+}
+
+.field input::placeholder {
+    color: #497174; /* Deep teal for placeholder text, maintaining visual harmony */
+}
+
+.field .p-error {
+    color: #EB6440; /* Vibrant orange for error messages, maintaining consistency */
 }
 
 button {
-    width: 100%;
-    padding: 0.5rem;
-    background-color: #ee6252;
-    color: #ff9900;
+    width: 50%;
+    padding: 12px;
     border: none;
-    border-radius: 25px;
+    border-radius: 4px;
+    background-color: #EB6440; /* Vibrant orange for buttons, signaling action */
+    color:white; /* White for button text, ensuring visibility */
+    display: block;
+    margin: 24px auto; /* Auto margins to center the button */
     cursor: pointer;
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.9rem;
-    font-weight: bold;
 }
 
-button:hover {
-    background-color: #e5e5e5;
-}
-
-.login-container p,
-.login-container div.mt-2 {
-    text-align: center;
-    margin-top: 1rem;
-}
-
-.login-container p a,
-.login-container div.mt-2 a {
-    color: #ffffff;
+.mt-2 a {
+    color: #497174; /* Deep teal for links, subtly attracting attention */
     text-decoration: none;
 }
 
-.login-container p a:hover,
-.login-container div.mt-2 a:hover {
-    text-decoration: underline;
-}
-label{
-    display: block; /* add this */
-    padding-bottom: 5px;
-
-}
-.field{
-  padding-bottom: 15px;
+.mt-2 a:hover {
+    text-decoration: underline; /* Enhances user interaction and feedback */
 }
 
-
-
-
-
+.mt-2 {
+    display: flex; /* Retained flexbox layout */
+    justify-content: center; /* Retained to center content horizontally within the container */
+    align-items: center; /* Retained to center content vertically */
+    margin-top: 24px; /* Increased spacing after the 'Not a member?' text */
+    text-align: center; /* Ensures text alignment is centered */
+    width: 100%; /* Ensures the container stretches across its parent's width */
+}

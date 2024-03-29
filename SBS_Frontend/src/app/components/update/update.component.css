@@ -1,23 +1,85 @@
+/* Base styles */
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #EFF5F5;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Style for the container */
 .update-container {
-    max-width: 400px;
-    margin: auto;
+  background-color: #D6E4E5;
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Header styles */
+h2 {
+  color: #497174;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Form field labels */
+label {
+  color: #497174;
+  display: block;
+  margin: 10px 0 5px;
+}
+
+/* Input field styles */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #497174;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding does not affect the final width */
+}
+
+/* Button styles */
+button {
+  background-color: #EB6440;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #ca5636;
+}
+
+button:disabled {
+  background-color: #a8a8a8;
+}
+
+/* Ensuring the container is always centered, even on larger screens */
+@media (min-height: 600px) {
+  .update-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
-  
-  form {
-    display: flex;
-    flex-direction: column;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .update-container {
+    width: 90%;
+    padding: 15px;
   }
-  
-  label {
-    margin-bottom: 5px;
-  }
-  
-  input, button {
-    margin-bottom: 10px;
-    padding: 8px;
-  }
-  
-  button {
-    cursor: pointer;
-  }
-  
+}

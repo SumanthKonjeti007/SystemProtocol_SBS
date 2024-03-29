@@ -13,13 +13,13 @@ import { TfOutsideComponent } from './components/tf-outside/tf-outside.component
 import { TranHisComponent } from './components/tran-his/tran-his.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { OtpVerificationComponent } from './otp-verification/otp-verification.component';
-import { TransactionListComponent } from './components/transaction-list/transaction-list.component';
 import { TransactionActionComponent } from './components/transaction-action/transaction-action.component';
-import { InternalUserHomeComponent } from './components/internal-user-home/internal-user-home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 import { AccountComponent } from './components/account/account.component';
-
+import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
+import { TransactionListComponent} from './components/transaction-list/transaction-list.component';
+import { InternalUserHomeComponent } from './components/internal-user-home/internal-user-home.component';
 const routes: Routes = [
   {
     path:'login',
@@ -83,6 +83,10 @@ const routes: Routes = [
   },{
     path:'home-admin',
     component:HomeAdminComponent
+  },
+  {
+    path:'header-admin',
+    component: HeaderAdminComponent
   },
   {
     path:'', redirectTo:'register',pathMatch:'full'
