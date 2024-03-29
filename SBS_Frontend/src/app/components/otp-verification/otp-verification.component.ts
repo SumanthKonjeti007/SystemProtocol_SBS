@@ -3,8 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { RegisterService } from '../services/register.service';
-import { decodeToken } from '../util/jwt-helper';
+import { RegisterService } from '../../services/register.service';
+import { decodeToken } from '../../util/jwt-helper';
+
 
 @Component({
   selector: 'app-otp-verification',

@@ -1,4 +1,4 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -12,7 +12,7 @@ import { TfWithinComponent } from './components/tf-within/tf-within.component';
 import { TfOutsideComponent } from './components/tf-outside/tf-outside.component';
 import { TranHisComponent } from './components/tran-his/tran-his.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
-import { OtpVerificationComponent } from './otp-verification/otp-verification.component';
+import { OtpVerificationComponent } from './components/otp-verification/otp-verification.component';
 import { TransactionActionComponent } from './components/transaction-action/transaction-action.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
@@ -20,6 +20,7 @@ import { AccountComponent } from './components/account/account.component';
 import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
 import { TransactionListComponent} from './components/transaction-list/transaction-list.component';
 import { InternalUserHomeComponent } from './components/internal-user-home/internal-user-home.component';
+import { IntUpdateProfileComponent } from './components/int-update-profile/int-update-profile.component';
 const routes: Routes = [
   {
     path:'login',
@@ -100,6 +101,7 @@ const routes: Routes = [
   { path: 'intuser-home/transaction-action', 
   component: TransactionActionComponent }, // Use a different path for transaction action
   { path: 'transaction/:action/:id', component: TransactionActionComponent },
+  { path: 'int-update-profile', component: IntUpdateProfileComponent },
   { path: '', redirectTo: 'intuser-home', pathMatch: 'full' },
 
   // Routes for user and internal user home pages with role-based redirection
