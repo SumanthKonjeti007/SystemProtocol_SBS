@@ -171,48 +171,48 @@ public TransactionDto createTransactionRequest(TransactionDto transactionDto) {
     return transactionDto;
 }
 
-//    public TransactionDto createDeleteTransactionRequest(TransactionDto transactionDto) {
-//        Transaction transaction =new Transaction();
-//        if (transactionDto.getTransactionId() == null) {
-//            //creation of request
-//            //GET SENDER,RECEIVER ACCOUNT DETAILS,user,transaction type,amount
-//            User user = userRepo.findById(transactionDto.getUser().getUserId()).get();
-//
-//            Account senderAcc = accountRepo.findbyaccountnumber(transactionDto.getSenderAcc().getAccountNumber());
-//            //Account receiverAcc = accountRepo.findbyaccountnumber(transactionDto.getReceiverAcc().getAccountNumber());
-//            transaction.setSenderAcc(senderAcc);
-//            //transaction.setReceiverAcc(receiverAcc);
-//            transaction.setUser(user);
-//            transaction.setTransactionType(transactionDto.getTransactionType());
-//            //transaction.setAmount(transactionDto.getAmount());
-//            transaction.setStatus(RequestStatus.CREATED.toString());
-//            transaction.setCreatedtime(LocalDateTime.now());
-//
-//            transaction=transactionRepo.save(transaction);
-////        BeanUtils.copyProperties(transaction,transactionDto);
-//            if (transaction.getTransactionId() == null){
-//                throw new RuntimeException("Error saving transaction");
-//            }
-//            TransactionAuthorization transactionAuthorization = new TransactionAuthorization();
-//            transactionAuthorization.setTransaction(transaction);
-//            transactionAuthorization.setStatus(ApprovalStatus.PENDING.toString());
-//            transactionAuthorization.setCreatedtime(LocalDateTime.now());
-//            transactionAuthorization=transactionAuthorizationRepo.save(transactionAuthorization);
-//
-//            if (transactionAuthorization.getAuthorizationId() == null){
-//                throw new RuntimeException("Error creating transaction request");
-//            }
-//            transaction.setStatus(RequestStatus.PENDING.toString());
-//            transaction.setLastModifiedtime(LocalDateTime.now());
-//            transaction=transactionRepo.save(transaction);
-//            BeanUtils.copyProperties(transaction,transactionDto);
-//        }
-//        return transactionDto;
-//    }
+    public TransactionDto createDeleteTransactionRequest(TransactionDto transactionDto) {
+        Transaction transaction =new Transaction();
+        if (transactionDto.getTransactionId() == null) {
+            //creation of request
+            //GET SENDER,RECEIVER ACCOUNT DETAILS,user,transaction type,amount
+            User user = userRepo.findById(transactionDto.getUser().getUserId()).get();
+
+            Account senderAcc = accountRepo.findbyaccountnumber(transactionDto.getSenderAcc().getAccountNumber());
+            //Account receiverAcc = accountRepo.findbyaccountnumber(transactionDto.getReceiverAcc().getAccountNumber());
+            transaction.setSenderAcc(senderAcc);
+            //transaction.setReceiverAcc(receiverAcc);
+            transaction.setUser(user);
+            transaction.setTransactionType(transactionDto.getTransactionType());
+            //transaction.setAmount(transactionDto.getAmount());
+            transaction.setStatus(RequestStatus.CREATED.toString());
+            transaction.setCreatedtime(LocalDateTime.now());
+
+            transaction=transactionRepo.save(transaction);
+//        BeanUtils.copyProperties(transaction,transactionDto);
+            if (transaction.getTransactionId() == null){
+                throw new RuntimeException("Error saving transaction");
+            }
+            TransactionAuthorization transactionAuthorization = new TransactionAuthorization();
+            transactionAuthorization.setTransaction(transaction);
+            transactionAuthorization.setStatus(ApprovalStatus.PENDING.toString());
+            transactionAuthorization.setCreatedtime(LocalDateTime.now());
+            transactionAuthorization=transactionAuthorizationRepo.save(transactionAuthorization);
+
+            if (transactionAuthorization.getAuthorizationId() == null){
+                throw new RuntimeException("Error creating transaction request");
+            }
+            transaction.setStatus(RequestStatus.PENDING.toString());
+            transaction.setLastModifiedtime(LocalDateTime.now());
+            transaction=transactionRepo.save(transaction);
+            BeanUtils.copyProperties(transaction,transactionDto);
+        }
+        return transactionDto;
+    }
 
     public TransactionAuthorizationDto approveTransactionRequest(TransactionAuthorizationDto transactionAuthorizationDto) {
         TransactionAuthorization transactionAuthorization = new TransactionAuthorization();
-        transactionAuthorization= transactionAuthorizationRepo.findByTransactionId(transactionAuthorizationDto.getTransaction().getTransactionId());
+        transactionAuthorization=transactionAuthorizationRepo.findById(transactionAuthorizationDto.getAuthorizationId()).get();
         Transaction transaction=transactionRepo.findById(transactionAuthorization.getTransaction().getTransactionId()).get();
         if (transaction.getStatus().equals(RequestStatus.PENDING.toString())  && transactionAuthorization.getStatus().equals(ApprovalStatus.PENDING.toString())){
             User approver = userRepo.findByUsername(transactionAuthorizationDto.getUser().getUsername());
@@ -250,7 +250,7 @@ public TransactionDto createTransactionRequest(TransactionDto transactionDto) {
     public TransactionAuthorizationDto rejectTransactionRequest(TransactionAuthorizationDto transactionAuthorizationDto) {
 
         TransactionAuthorization transactionAuthorization = new TransactionAuthorization();
-        transactionAuthorization= transactionAuthorizationRepo.findByTransactionId(transactionAuthorizationDto.getTransaction().getTransactionId());
+        transactionAuthorization=transactionAuthorizationRepo.findById(transactionAuthorizationDto.getAuthorizationId()).get();
         Transaction transaction=transactionRepo.findById(transactionAuthorization.getTransaction().getTransactionId()).get();
         if (transaction.getStatus().equals(RequestStatus.PENDING.toString())  && transactionAuthorization.getStatus().equals(ApprovalStatus.PENDING.toString())){
             User approver = userRepo.findByUsername(transactionAuthorizationDto.getUser().getUsername());
