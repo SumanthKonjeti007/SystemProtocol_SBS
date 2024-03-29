@@ -1,0 +1,78 @@
+body {
+    margin: 20 20 20;
+    padding: 60px; /* Adds a 'margin' around the content to simulate a paper effect */
+    font-family: 'Arial', sans-serif;
+    background-color: #EFF5F5; /* Lightest shade for the overall background */
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    min-height: 200vh; /* Ensures the minimum height is the full viewport height */
+    box-sizing: border-box; /* Ensures padding does not add to the total width/height */
+    margin-top: 200px;
+    
+  }
+  
+  .otp-container {
+    max-width: 360px; /* Sets a maximum width for the container */
+    width: 100%; /* Ensures it does not exceed the parent's width */
+    padding: 40px; /* Internal spacing */
+    border-radius: 8px; /* Rounded corners for a modern look */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background-color: #D6E4E5; /* Light grey-blue for the container background */
+    color: #497174; /* Darker shade of blue for text */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Aligns items in the center */
+    margin: auto; /* Helps in centering and maintaining the max-width */
+    margin-top: 230px;
+  }
+  
+  
+  h1 {
+    color: #497174; /* Darker shade of blue for the heading */
+    margin-bottom: 20px; /* Space below the heading */
+  }
+  
+  .field {
+    margin-bottom: 10px; /* Space below each field */
+    width: 100%; /* Full width */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align the elements */
+  }
+  
+  .field label {
+    margin-bottom: 6px; /* Space below the label */
+  }
+  
+  .field input {
+    padding: 10px;
+    border: 1px solid #497174; /* Border color */
+    border-radius: 4px; /* Rounded corners for the input field */
+    width: 100%; /* Input field width, adjust as needed */
+    background-color: #EFF5F5; /* Input background color */
+  }
+  
+  .field .p-error {
+    color: #EB6440; /* Error message color */
+    margin-top: 6px; /* Space above the error message */
+  }
+  
+  button {
+    padding: 20px 40px;
+    border: none;
+    border-radius: 4px;
+    background-color: #EB6440; /* Vibrant orange for the button */
+    color: #FFF; /* White text for contrast */
+    cursor: pointer;
+    width: auto; /* Adjust width to fit content */
+    /* Ensures the button is centered */
+    margin-top: 20px; /* Space above the button */
+    align-self: center;
+  }
+  
+  button[disabled] {
+    background-color:#EB6440 ; /* Greyed out button when disabled */
+    align-self: center;
+  }
+  

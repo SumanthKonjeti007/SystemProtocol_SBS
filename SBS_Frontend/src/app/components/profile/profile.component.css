@@ -1,0 +1,63 @@
+/* Set the base */
+html, body {
+  height: 100%;
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #EFF5F5;
+}
+
+/* Center the profile container on the page */
+div {
+    background-color: #D6E4E5;
+    width: 80%;
+    max-width: 600px; /* Adjust based on your preference */
+    margin: auto;
+    margin-top: 200px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  /* Style the header */
+  
+  
+  /* Style headings and paragraphs within the profile component */
+  h2 {
+    color: #497174;
+    text-align: center;
+  }
+  
+  p {
+    color: #497174;
+    line-height: 1.6;
+  }
+  
+  /* Style the buttons with a primary and danger color scheme */
+  button {
+    background-color: #EB6440; /* Primary action */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px; /* Ensures space between buttons */
+  }
+  
+  button:last-child {
+    margin-right: 0;
+  }
+  
+  button:hover {
+    background-color: #ca5636; /* A slightly darker shade for hover effect */
+  }
+  
+  /* Optional: Add some responsiveness to ensure layout adjusts on smaller screens */
+  @media (max-width: 768px) {
+    div {
+      width: 90%;
+      padding: 15px;
+      margin-top: 100px;
+    }
+  }
+  

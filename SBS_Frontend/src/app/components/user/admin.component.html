@@ -1,4 +1,3 @@
-<!-- Updated HTML -->
 <div class="user-list">
   <h2>User List</h2>
   <table>
@@ -12,6 +11,8 @@
         <th>Last Name</th>
         <th>Phone Number</th>
         <th>Status</th>
+        <th>Action</th>
+         
       </tr>
     </thead>
     <tbody>
@@ -24,6 +25,12 @@
         <td>{{ user.lastName }}</td>
         <td>{{ user.phoneNumber }}</td>
         <td>{{ user.status }}</td>
+        <td>
+          <button *ngIf="user.status === 'Active'" (click)="deactivateUser(user.userId)">Deactivate</button>
+          <button *ngIf="user.status === 'Inactive'" (click)="activateUser(user.userId)">Activate</button>
+        </td>
+
+        
       </tr>
     </tbody>
   </table>

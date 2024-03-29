@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { RegisterService } from '../../services/register.service';
 import { Router } from '@angular/router';
 import { user } from '../../services/user';
+import { ReactiveFormsModule } from '@angular/forms';
 import {decodeToken} from '../../util/jwt-helper';
 
 @Component({

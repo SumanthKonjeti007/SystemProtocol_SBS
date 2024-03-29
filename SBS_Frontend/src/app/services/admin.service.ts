@@ -1,24 +1,27 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { user } from './user'; // Adjust the import path as necessary
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
+  
   private baseUrl = 'http://localhost:8080/api/v1/';
   constructor(private http: HttpClient) { }
 
   getAllUsers(): Observable<user[]> {
     const url = this.baseUrl + 'admin/users'; // Use a constructed URL from baseUrl
-    // const httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //   }),
-    //   responseType: 'text' as 'json' // Specify the response type as text
-    // };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      responseType: 'text' as 'json' // Specify the response type as text
+    };
 
     return this.http.get<user[]>(`${this.baseUrl}admin/users`)
       .pipe(
@@ -31,4 +34,52 @@ export class AdminService {
   }
 
   // Add other service methods as needed
+
+  deactivateUser(userId: any): Observable<any> {
+    const url = `${this.baseUrl}deactiveUser?id=${userId}`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      responseType: 'text' as 'json' // Specify the response type as text
+    };
+    return this.http.post(url, {},httpOptions).pipe(
+      tap(_ => console.log(`Deactivated user id=${userId}`)),
+      catchError(error => {
+        console.error('Error deactivating user:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  activateUser(userId: any): Observable<any> {
+    const url = `${this.baseUrl}activateUser?id=${userId}`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      responseType: 'text' as 'json' // Specify the response type as text
+    };
+    return this.http.post(url,{},httpOptions).pipe(
+      tap(_ => console.log(`Activated user id=${userId}`)),
+      catchError(error => {
+        console.error('Error activating user:', error);
+        return throwError(error);
+      })
+    );
+
+    
+  }
+
+// validateOtp(email: string, otp: string) {
+//   const url = this.baseUrl + 'validate-otp';
+//   const body = { email, otp };
+//   const httpOptions = {
+//     headers: new HttpHeaders({
+//       'Content-Type': 'application/json',
+//     }),
+//     responseType: 'text' as 'json' // Specify the response type as text
+//   };
+//   return this.http.post(url, body, httpOptions );
+// }
 }
