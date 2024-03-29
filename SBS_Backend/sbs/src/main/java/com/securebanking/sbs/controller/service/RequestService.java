@@ -171,7 +171,7 @@ public TransactionDto createTransactionRequest(TransactionDto transactionDto) {
     return transactionDto;
 }
 
-    public TransactionDto createDeleteTransactionRequest(TransactionDto transactionDto) {
+    public TransactionDto createDeleteTransactionRequest(TransactionDto transactionDto, String TransactionType) {
         Transaction transaction =new Transaction();
         if (transactionDto.getTransactionId() == null) {
             //creation of request
@@ -184,7 +184,7 @@ public TransactionDto createTransactionRequest(TransactionDto transactionDto) {
             //transaction.setReceiverAcc(receiverAcc);
             transaction.setUser(user);
             transaction.setTransactionType(transactionDto.getTransactionType());
-            //transaction.setAmount(transactionDto.getAmount());
+            transaction.setAmount(transactionDto.getAmount());
             transaction.setStatus(RequestStatus.CREATED.toString());
             transaction.setCreatedtime(LocalDateTime.now());
 
@@ -233,8 +233,8 @@ public TransactionDto createTransactionRequest(TransactionDto transactionDto) {
                     accountService.executeTransaction(transaction);
                     break;
                 case "DELETE":
-                    accountService.delete(transaction);
-                    // Add more cases for other transaction types
+                    accountService.setAccountInactive(transaction);
+                    break;
                 default:
                     throw new RuntimeException("Unsupported transaction type");
             }

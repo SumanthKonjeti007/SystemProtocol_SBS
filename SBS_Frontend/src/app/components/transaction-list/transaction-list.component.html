@@ -1,9 +1,35 @@
 <app-intheader></app-intheader>
-<h2>Transaction List</h2>
-<ul class="transactions">
-  <li *ngFor="let transaction of transactions">
-    {{ transaction.description }} - {{ transaction.amount }}
-    <button (click)="goToAction('verify', transaction.id)">Verify</button>
-    <button (click)="goToAction('authorize', transaction.id)">Authorize</button>
-  </li>
-</ul>
+<div class="transaction-list">
+  <h2>Transaction List</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Transaction Id</th>
+        <th>Sender Account</th>
+        <th>Receiver Account</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Type</th>
+        <th>Created At</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transaction of transactions">
+        <td>{{ transaction.transactionId }}</td>
+        <td>{{ transaction.senderAcc?.accountNumber }}</td>
+        <td>{{ transaction.receiverAcc?.accountNumber }}</td>
+        <td>{{ transaction.amount }}</td>
+        <td>{{ transaction.status }}</td>
+        <td>{{ transaction.transactionType }}</td>
+        <td>{{ transaction.createdtime }}</td>
+        <td>
+          <div *ngIf="transaction.status === 'PENDING'">
+            <button (click)="acceptTransaction(transaction.transactionId)" class="accept-btn">Accept</button>
+            <button (click)="rejectTransaction(transaction.transactionId)" class="reject-btn">Reject</button>
+          </div>
+        </td>        
+      </tr>
+    </tbody>
+  </table>
+</div>

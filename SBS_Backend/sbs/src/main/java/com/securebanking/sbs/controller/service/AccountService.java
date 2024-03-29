@@ -154,26 +154,22 @@ public class AccountService {
     }
 
     @Transactional
-    public void delete(Transaction transaction) {
-        Account accountToDelete = transaction.getSenderAcc(); // Assuming the account to delete is the sender
-
-        // Check if the account has a zero balance before proceeding
-        BigDecimal balance = new BigDecimal(accountToDelete.getBalance());
+    public void setAccountInactive(Transaction transaction) {
+        Account accountToSetInactive = transaction.getSenderAcc();
+        BigDecimal balance = new BigDecimal(accountToSetInactive.getBalance());
         if (balance.compareTo(BigDecimal.ZERO) != 0) {
-            throw new RuntimeException("Account balance must be zero to delete");
+            throw new RuntimeException("Account balance must be zero to set inactive");
         }
         // Optionally, check for no pending transactions
         // This part depends on how you track transactions in your system
-//        boolean hasPendingTransactions = transactionRepo.findByAccountAndStatus(
-//                accountToDelete, "PENDING").stream().findAny().isPresent();
-//        if (hasPendingTransactions) {
-//            throw new RuntimeException("Account has pending transactions and cannot be deleted");
-//        }
-        // Proceed with account deletion
-        accountRepo.delete(accountToDelete);
-
-        // Optionally, update the transaction to reflect the account deletion
-        transaction.setStatus(ApprovalStatus.DELETED.toString());
+        // boolean hasPendingTransactions = transactionRepo.findByAccountAndStatus(
+        //         accountToSetInactive, "PENDING").stream().findAny().isPresent();
+        // if (hasPendingTransactions) {
+        //     throw new RuntimeException("Account has pending transactions and cannot be set to inactive");
+        // }
+        accountToSetInactive.setStatus("INACTIVE");
+        accountRepo.save(accountToSetInactive);
+        transaction.setStatus(ApprovalStatus.INACTIVE.toString());
         transactionRepo.save(transaction);
     }
 
