@@ -13,4 +13,6 @@ public interface Iuser {
 
     public HttpStatus activateUser(Integer id);
 
+    public UserDto login(String username, String password) throws Exception;
+
 }

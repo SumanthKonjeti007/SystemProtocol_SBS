@@ -49,7 +49,7 @@ public class UserController {
 
     @PostMapping("/login")
     @CrossOrigin("*")
-    public UserDto login(@Valid @RequestBody LoginDto loginRequest) {
+    public UserDto login(@Valid @RequestBody LoginDto loginRequest) throws Exception {
         UserDto result = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
         return result;
 
