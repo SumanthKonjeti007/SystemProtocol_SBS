@@ -40,8 +40,11 @@ import { OtpVerificationComponent } from './otp-verification/otp-verification.co
 import { AdminComponent } from './components/user/admin.component';
 import { CommonModule } from '@angular/common';
 import { AccountComponent } from './components/account/account.component';
-//import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { InternalUserModule } from './components/internal-user-home/internal-user.module';
+import { SharedModule } from './shared/shared.module';
 
+//import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { TransactionListModule } from './components/transaction-list/transaction-list.module';
 //import { TfInstantComponent } from './components/tf-instant/tf-instant.component';
 //import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 //import { NgModule } from '@angular/core';
@@ -70,6 +73,7 @@ import { AccountComponent } from './components/account/account.component';
     UserDetailsComponent,
     OtpVerificationComponent,
     CapitalizePipe,
+    
 
   ],
   imports: [
@@ -84,6 +88,9 @@ import { AccountComponent } from './components/account/account.component';
     FormsModule,
     HttpClientModule,
     CommonModule,
+    SharedModule,
+    InternalUserModule,
+    TransactionListModule
     //NgbModule,
   ],
   providers: [],
