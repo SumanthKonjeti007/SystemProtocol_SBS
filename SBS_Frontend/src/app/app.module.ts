@@ -40,8 +40,18 @@ import { OtpVerificationComponent } from './components/otp-verification/otp-veri
 import { AdminComponent } from './components/user/admin.component';
 import { CommonModule } from '@angular/common';
 import { AccountComponent } from './components/account/account.component';
-import { IntUpdateProfileComponent } from './components/int-update-profile/int-update-profile.component';
+import { InternalUserModule } from './components/internal-user-home/internal-user.module';
+import { SharedModule } from './shared/shared.module';
 
+//import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { TransactionListModule } from './components/transaction-list/transaction-list.module';
+//import { TfInstantComponent } from './components/tf-instant/tf-instant.component';
+//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+//import { NgModule } from '@angular/core';
+//import { ReactiveFormsModule } from '@angular/forms';
+//import { UpdateComponent } from './path-to-your-update-component/update.component'; // Update the path
+//import { ProfileComponent } from './profile/profile.component';
+import { IntUpdateProfileComponent } from './components/int-update-profile/int-update-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,6 +88,9 @@ import { IntUpdateProfileComponent } from './components/int-update-profile/int-u
     FormsModule,
     HttpClientModule,
     CommonModule,
+    SharedModule,
+    InternalUserModule,
+    TransactionListModule
     //NgbModule,
   ],
   providers: [],
