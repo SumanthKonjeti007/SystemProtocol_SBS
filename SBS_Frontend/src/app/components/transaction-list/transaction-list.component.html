@@ -1,8 +1,44 @@
-<h2>Transaction List</h2>
-<ul class="transactions">
-  <li *ngFor="let transaction of transactions">
-    {{ transaction.description }} - {{ transaction.amount }}
-    <button (click)="goToAction('verify', transaction.id)">Verify</button>
-    <button (click)="goToAction('authorize', transaction.id)">Authorize</button>
-  </li>
-</ul>
+<app-intuserheader></app-intuserheader> <!-- Include the header component -->
+
+<div class="content">
+    <h1>Pending Transactions</h1>
+    <div>
+        <h2>Transaction List</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Sender Username</th>
+                    <th>Sender Account Number</th>
+                    <th>Sender Account Type</th>
+                    <th>Receiver Username</th>
+                    <th>Receiver Account Number</th>
+                    <th>Receiver Account Type</th>
+                    <th>Transaction Type</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Actions</th> <!-- New column for buttons -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let transaction of transactions">
+                    <td>{{ transaction.transactionId }}</td>
+                    <td>{{ transaction.senderAcc.user.username }}</td>
+                    <td>{{ transaction.senderAcc.accountNumber }}</td>
+                    <td>{{ transaction.senderAcc.accountType }}</td>
+                    <td>{{ transaction.receiverAcc.user.username }}</td>
+                    <td>{{ transaction.receiverAcc.accountNumber }}</td>
+                    <td>{{ transaction.receiverAcc.accountType }}</td>
+                    <td>{{ transaction.transactionType }}</td>
+                    <td>{{ transaction.amount }}</td>
+                    <td>{{ transaction.status }}</td>
+                    <td>
+                        <!-- Buttons for Verify and Reject actions -->
+                        <button (click)="verifyTransaction(transaction.transactionId)" class="btn btn-primary">Approve</button>
+                        <button (click)="rejectTransaction(transaction.transactionId)" class="btn btn-success">Reject</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
