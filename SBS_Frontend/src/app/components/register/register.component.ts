@@ -267,7 +267,7 @@ export class RegisterComponent {
       status: 'Active',
       userId: undefined,
       role: {
-        roleId: 1,
+        roleId: 2,
         roleName: undefined
       },
       token: undefined
