@@ -13,7 +13,7 @@ export class UserService {
     phoneNumber: '1234567890',
     address: '123 Main Street, City, Country',
   };
-
+  private token = localStorage.getItem('jwtToken') || null;
   private baseUrl = 'http://localhost:8080/api/v1';
   
   constructor(private http: HttpClient) {}
@@ -33,6 +33,7 @@ export class UserService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
       })
     };
     return this.http.post(url, updatedData, httpOptions );

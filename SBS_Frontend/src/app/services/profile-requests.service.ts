@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { transaction } from '../services/transaction';
 
@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 export class ProfileRequestsService {
 
   private baseUrl = 'http://localhost:8080/api/v1/';
+  private token = localStorage.getItem('jwtToken') || null;
   apiURL: any;
   
   constructor(private http: HttpClient) {}
@@ -17,12 +18,24 @@ export class ProfileRequestsService {
   
   
   getPendingProfileRequests(): Observable<transaction[]> {
-    return this.http.get<transaction[]>(`${this.baseUrl}transaction/pendingProfileRequests`);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+    return this.http.get<transaction[]>(`${this.baseUrl}transaction/pendingProfileRequests`,httpOptions);
   }
 
   updateUserProfile(data: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
     const url = `${this.baseUrl}transaction/updateUserProfile`;
-    return this.http.post(url, data);
+    return this.http.post(url, data,httpOptions);
   }
 
 }

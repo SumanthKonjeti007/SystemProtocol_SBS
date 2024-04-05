@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -42,6 +43,7 @@ public class UserService implements Iuser {
 
     public HttpStatus createOrUpdateUser(@Valid UserDto userDto) throws UserNotFoundException {
         User user = new User();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         UserRole userRole = userRoleRepo.findById(userDto.getRole().getRoleId()).orElseThrow(() -> new UserRoleNotFoundException("User role not found"));
 
         if(userDto.getUserId() != null){
@@ -54,7 +56,7 @@ public class UserService implements Iuser {
             user.setUsername(userDto.getUsername());
         }
         if(userDto.getPasswordHash() != null) {
-            user.setPasswordHash(userDto.getPasswordHash());
+            user.setPasswordHash(encoder.encode(userDto.getPasswordHash()));
         }
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setEmailAddress(userDto.getEmailAddress());
@@ -96,7 +98,8 @@ public class UserService implements Iuser {
         if(user == null){
             throw  new InvalidCredentialsException("Invalid username");
         }
-        if (!password.equals(user.getPasswordHash())) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (!encoder.matches(password, user.getPasswordHash())) {
             throw new InvalidCredentialsException("Invalid password");
         }
         if (user.getStatus().equals("Inactive")) {
@@ -159,5 +162,30 @@ public class UserService implements Iuser {
         else {
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
+    }
+
+    public HttpStatus register(UserDto userDto) {
+        User user = new User();
+        UserRole userRole = userRoleRepo.findById(userDto.getRole().getRoleId()).orElseThrow(() -> new UserRoleNotFoundException("User role not found"));
+
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setUsername(userDto.getUsername());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPasswordHash(encoder.encode(userDto.getPasswordHash()));
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setEmailAddress(userDto.getEmailAddress());
+        user.setAddress(userDto.getAddress());
+        user.setRole(userRole);
+        user.setStatus("Active");
+
+        user=userRepo.save(user);
+        if (user != null){
+            return HttpStatus.OK;
+        }
+        else {
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
     }
 }

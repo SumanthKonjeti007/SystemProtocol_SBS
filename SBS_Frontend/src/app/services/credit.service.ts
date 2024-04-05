@@ -42,6 +42,7 @@ import { transaction } from './transaction'; // Adjust the import path as necess
 })
 export class CreditService {
   private baseUrl = 'http://localhost:8080/api/v1/account/';
+  private token = localStorage.getItem('jwtToken') || null;
   constructor(private http: HttpClient) { }
 
   performTransaction(transactionType: 'CREDIT' | 'DEBIT', transactionData: transaction): Observable<any> {
@@ -49,7 +50,8 @@ export class CreditService {
     console.log(transactionData, transactionType, url);
     return this.http.post(url, transactionData, {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`,
       }),  responseType: 'text' as 'json'
     })
     // }).pipe(

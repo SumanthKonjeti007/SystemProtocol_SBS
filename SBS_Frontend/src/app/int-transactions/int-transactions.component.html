@@ -1,3 +1,4 @@
+<app-intheader></app-intheader>
 <div>
     <input type="text" [(ngModel)]="accountNumber" placeholder="Enter account number">
     <button (click)="onSubmit()">Submit</button>
@@ -22,13 +23,13 @@
         </thead>
         <tbody>
             <tr *ngFor="let transaction of transactions">
-                <td>{{ transaction.transactionId }}</td>
-                <td>{{ transaction.senderAcc.accountNumber }}</td>
-                <td>{{ transaction.receiverAcc.accountNumber }}</td>
-                <td>{{ transaction.transactionType }}</td>
-                <td>{{ transaction.amount }}</td>
-                <td>{{ transaction.createdtime }}</td>
-                <td>{{ transaction.status }}</td>
+                <td>{{ transaction?.transactionId }}</td>
+                <td>{{ transaction?.senderAcc?.accountNumber }}</td>
+                <td>{{ transaction?.receiverAcc?.accountNumber }}</td>
+                <td>{{ transaction?.transactionType }}</td>
+                <td>{{ transaction?.amount }}</td>
+                <td>{{ transaction?.createdtime }}</td>
+                <td>{{ transaction?.status }}</td>
                 <td>
                         <button (click)="updateTransaction(transaction)">Edit</button> <!-- Button wrapped within anchor tag -->
                 </td>

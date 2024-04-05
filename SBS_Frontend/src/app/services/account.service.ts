@@ -12,11 +12,33 @@ export class AccountService {
 
   constructor(private http: HttpClient) {}
 
-  getAllAccounts(userId: number): Observable<account[]> {
-    // userId = 4;
-    const url = `${this.baseUrl}/user/${userId}/accountDetails`; // Dynamic URL including the userId
+  // getAllAccounts(userId: number): Observable<account[]> {
+  //   // userId = 4;
+  //   const url = `${this.baseUrl}/user/${userId}/accountDetails`; // Dynamic URL including the userId
 
-    return this.http.get<account[]>(url)
+  //   return this.http.get<account[]>(url)
+  //     .pipe(
+  //       tap((accounts: account[]) => console.log('Fetched Accounts:', accounts)),
+  //       catchError((error: any) => {
+  //           console.error('Error from backend:', error);
+  //           return throwError(error);
+  //         })
+  //     );
+  // }
+
+
+
+getAllAccounts(userId: number): Observable<account[]> {
+    const url = `${this.baseUrl}/user/${userId}/accountDetails`; // Dynamic URL including the userId
+    const token = localStorage.getItem('jwtToken')
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http.get<account[]>(url, httpOptions)
       .pipe(
         tap((accounts: account[]) => console.log('Fetched Accounts:', accounts)),
         catchError((error: any) => {
@@ -24,11 +46,13 @@ export class AccountService {
             return throwError(error);
           })
       );
-  }
+}
+
   
   initiateDeleteRequest(userId: number, accountNumber: string): Observable<any> {
     console.log(userId, accountNumber)
     const url = `${this.baseUrl}/DELETE`; // Adjust the endpoint as necessary
+    const token = localStorage.getItem('jwtToken')
     const body = {
       user: {
         userId: userId
@@ -42,7 +66,8 @@ export class AccountService {
 
     return this.http.post(url, body, {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       }),  responseType: 'text' as 'json'
     })
       .pipe(

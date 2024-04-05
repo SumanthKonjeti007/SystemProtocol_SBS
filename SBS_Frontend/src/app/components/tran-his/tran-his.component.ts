@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 //import {TransactionService } from './transaction.service';
 import { TransactionService } from '../../services/transaction.service';
 import { transaction } from '../../services/transaction';
-import { decodeToken } from '../../util/jwt-helper';
+import { JwtHelperService } from '../../services/jwt-helper.service'; 
+import { UserRoles } from '../../user-roles';
 
 @Component({
   selector: 'app-tran-his',
@@ -15,12 +16,13 @@ export class TranHisComponent implements OnInit {
   token: string | undefined;
   decodedToken: any;
 
-  constructor(private transactionService: TransactionService) { }
+  constructor(private transactionService: TransactionService, private jwtHelper: JwtHelperService) { }
 
   ngOnInit(): void {
+    if (this.jwtHelper.checkSessionValidity(UserRoles.customer)){
     this.token = localStorage.getItem('jwtToken') || '{}';
       
-        this.decodedToken = decodeToken(this.token)
+        this.decodedToken = this.jwtHelper.decodeToken(this.token)
     this.transactionService.getAllTransactions(this.decodedToken.userId).subscribe(
       (transactions: transaction[]) => {
         this.transactions = transactions;
@@ -30,6 +32,7 @@ export class TranHisComponent implements OnInit {
         console.error('Error fetching transactions:', error);
       }
     );
+  }
   }
 }
 

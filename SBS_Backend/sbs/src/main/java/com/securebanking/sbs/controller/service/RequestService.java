@@ -223,7 +223,7 @@ public TransactionDto createTransactionRequest(TransactionDto transactionDto) {
             transactionAuthorization.setStatus(ApprovalStatus.APPROVED.toString());
             transactionAuthorization.setLastModifiedtime(LocalDateTime.now());
             transactionAuthorization.setUser(approver);
-            transactionAuthorization=transactionAuthorizationRepo.save(transactionAuthorization);
+
             switch (transaction.getTransactionType()) {
                 case "TRANSFER_FUNDS":
                     accountService.transferFunds(transaction);
@@ -238,6 +238,7 @@ public TransactionDto createTransactionRequest(TransactionDto transactionDto) {
                 default:
                     throw new RuntimeException("Unsupported transaction type");
             }
+            transactionAuthorization=transactionAuthorizationRepo.save(transactionAuthorization);
             BeanUtils.copyProperties(transactionAuthorizationDto,transactionAuthorization);
         }
         else{
@@ -293,5 +294,37 @@ public TransactionDto createTransactionRequest(TransactionDto transactionDto) {
         Account account = accountRepo.findbyaccountnumber(accNumber);
         return transactionRepo.findAllTransactionsByAccountNumber(account.getAccountId());
     }
+
+
+    public TransactionDto updateTransaction(TransactionDto updatedTransaction) {
+        Transaction transaction = transactionRepo.findById(updatedTransaction.getTransactionId()).get();
+
+        if(!updatedTransaction.getSenderAcc().getAccountNumber().equals(transaction.getSenderAcc().getAccountNumber())){
+            transaction.setSenderAcc(accountRepo.findbyaccountnumber(updatedTransaction.getSenderAcc().getAccountNumber()));
+        }
+        if(!updatedTransaction.getReceiverAcc().getAccountNumber().equals(transaction.getReceiverAcc().getAccountNumber())){
+            transaction.setReceiverAcc(accountRepo.findbyaccountnumber(updatedTransaction.getReceiverAcc().getAccountNumber()));
+        }
+        //sender, receiver, type, amount, status.
+
+        if(!updatedTransaction.getTransactionType().equals(transaction.getTransactionType())){
+            transaction.setTransactionType(updatedTransaction.getTransactionType());
+        }
+        if(!updatedTransaction.getAmount().equals(transaction.getAmount())) {
+            transaction.setAmount(updatedTransaction.getAmount());
+        }
+
+        if(!updatedTransaction.getStatus().equals(transaction.getStatus())){
+            transaction.setStatus(updatedTransaction.getStatus().toString());
+        }
+        transaction.setLastModifiedtime(LocalDateTime.now());
+        System.out.println(transaction);
+        transaction = transactionRepo.save(transaction);
+
+
+        BeanUtils.copyProperties(transaction,updatedTransaction);
+        return updatedTransaction;
+    }
+
 }
 

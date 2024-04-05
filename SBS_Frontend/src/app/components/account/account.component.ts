@@ -3,7 +3,8 @@ import { AccountService } from '../../services/account.service'; // Adjust the p
 import { account } from '../../services/account'; // Ensure this model supports a 'deleted?' boolean property
 import { CommonModule } from '@angular/common';
 import { user } from '../../services/user';
-import { decodeToken } from '../../util/jwt-helper';
+import { JwtHelperService } from '../../services/jwt-helper.service'; 
+import { UserRoles } from '../../user-roles';
 
 @Component({
   selector: 'app-user-list',
@@ -11,15 +12,16 @@ import { decodeToken } from '../../util/jwt-helper';
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
+  
+  constructor(private accountService: AccountService, private jwtHelper: JwtHelperService) {}
   accounts: account[] = [];
   user = new user();
   userId: number | null = null;
-  token = localStorage.getItem('jwtToken')|| '{}';;
-  decodedToken = decodeToken(this.token);
-
-  constructor(private accountService: AccountService) {}
+  token = localStorage.getItem('jwtToken')|| '{}';
+  decodedToken = this.jwtHelper.decodeToken(this.token);
 
   ngOnInit(): void {
+    if (this.jwtHelper.checkSessionValidity(UserRoles.customer)){
     // const token = localStorage.getItem('jwtToken');
     if (this.token) {
       // Decode the JWT token to get the userId
@@ -33,6 +35,7 @@ export class AccountComponent implements OnInit {
     } else {
       console.error('JWT Token not found in local storage');
     }
+  }
   }
 
   public getAccounts(userId: number): void {

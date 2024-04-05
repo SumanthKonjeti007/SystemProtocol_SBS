@@ -5,7 +5,8 @@ import { transaction } from '../../services/transaction'; // Adjust the import p
 import { account } from '../../services/account'; // Adjust the import path as necessary
 import { user } from "../../services/user"
 import { UserService } from '../../services/user.service';
-import { decodeToken } from '../../util/jwt-helper';
+import { JwtHelperService } from '../../services/jwt-helper.service'; 
+import { UserRoles } from '../../user-roles';
 
 function isTransactionType(type: string): type is 'CREDIT' | 'DEBIT' {
   return type === 'CREDIT' || type === 'DEBIT';
@@ -18,6 +19,7 @@ function isTransactionType(type: string): type is 'CREDIT' | 'DEBIT' {
 })
 
 export class CreditComponent implements OnInit{
+  
   //transaction = new transaction(new account(), new account(), 'CREDIT', '0', 'PENDING'); // Initialize with empty values or however you see fit
   senderAcc = new account();
   receiverAcc = new account();
@@ -27,13 +29,15 @@ export class CreditComponent implements OnInit{
   token: string | undefined;
 
   constructor(private creditService: CreditService,
-    private userService: UserService) {}
+    private userService: UserService,
+    private jwtHelper: JwtHelperService) {}
 
     ngOnInit(): void {
+      if (this.jwtHelper.checkSessionValidity(UserRoles.customer)){
       const token = localStorage.getItem('jwtToken');
       if (token) {
         // Decode the JWT token to get the userId
-        const decodedToken = decodeToken(token);
+        const decodedToken = this.jwtHelper.decodeToken(token);
         const userId = decodedToken?.userId;
         if (userId) {
           // If we have a userId, initialize the transaction with it
@@ -46,7 +50,7 @@ export class CreditComponent implements OnInit{
         console.error('JWT Token not found in local storage');
         // Handle the error case where the JWT token is not found
       }
-      
+    }
     }
 
     initializeTransaction(userId: number): void {

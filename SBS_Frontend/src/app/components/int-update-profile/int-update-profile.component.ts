@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileRequestsService } from '../../services/profile-requests.service';
-import { decodeToken } from '../../util/jwt-helper';
+import { JwtHelperService } from '../../services/jwt-helper.service'; 
+import { UserRoles } from '../../user-roles';
 
 @Component({
   selector: 'app-int-update-profile',
@@ -10,13 +11,15 @@ import { decodeToken } from '../../util/jwt-helper';
 export class IntUpdateProfileComponent implements OnInit {
   token: string | undefined;
   decodedToken: any | null;
-  constructor(private profileRequestsService: ProfileRequestsService) {}
+  constructor(private profileRequestsService: ProfileRequestsService, private jwtHelper: JwtHelperService) {}
   profileRequestsList: any[] | undefined;
 
   ngOnInit(): void {
+    if (this.jwtHelper.checkSessionValidity(UserRoles.internal)){
     this.token = localStorage.getItem('jwtToken') || '{}';
-     this.decodedToken = decodeToken(this.token);
+    const decodedToken = this.jwtHelper.decodeToken(this.token);
     this.fetchProfileRequests();
+  }
   }
 
   fetchProfileRequests(): void {

@@ -21,4 +21,6 @@ public interface IRequest {
 
     public List<Transaction> getAllTransactions();
     public List<Transaction> getAllTransactionsUsingSenderId(Integer id);
+
+    public List<Transaction> getAllTransactionsUsingaccountNumber(String accNumber);
 }

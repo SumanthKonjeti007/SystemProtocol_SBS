@@ -11,16 +11,17 @@ import { transaction } from './transaction'; // Adjust the import path as necess
 export class TransactionListService {   
     private baseUrl = 'http://localhost:8080/api/v1/transaction/';
     constructor(private http: HttpClient) { }
+    private token = localStorage.getItem('jwtToken') || null;
 
     getAllTransactions(): Observable<transaction[]> {
         //const url = this.baseUrl + 'allTransactions';
         const httpOptions = {
             headers: new HttpHeaders({
               'Content-Type': 'application/json',
-            }),
-            responseType: 'text' as 'json' // Specify the response type as text
+              'Authorization': `Bearer ${this.token}`
+            })
           };
-          return this.http.get<transaction[]>(`${this.baseUrl}allTransactions`)
+          return this.http.get<transaction[]>(`${this.baseUrl}allTransactions`,httpOptions)
       .pipe(
         tap((transactions: transaction[]) => console.log('Fetched users:', transactions)), // Log the users for verification
         catchError((error: any) => {
@@ -56,6 +57,7 @@ export class TransactionListService {
     const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.token}`
         }),
         responseType: 'text' as 'json' // Specify the response type as text
       };
@@ -76,6 +78,7 @@ export class TransactionListService {
     const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.token}`
         }),
         responseType: 'text' as 'json' // Specify the response type as text
       };
@@ -89,6 +92,7 @@ export class TransactionListService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
       }),
       responseType: 'text' as 'json' // Specify the response type as text
     };
@@ -106,6 +110,7 @@ export class TransactionListService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
       }),
       responseType: 'text' as 'json' // Specify the response type as text
     };

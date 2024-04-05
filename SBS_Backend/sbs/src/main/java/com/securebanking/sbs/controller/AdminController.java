@@ -3,6 +3,7 @@ package com.securebanking.sbs.controller;
 import com.securebanking.sbs.controller.service.AdminService;
 import com.securebanking.sbs.dto.UserDto;
 import com.securebanking.sbs.model.User;
+import com.securebanking.sbs.util.JwtTokenRequired;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class AdminController {
 
     @GetMapping("/users")
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public List<UserDto> getAllUserDetails(){
         return adminService.getAllUsers();
     }

@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { RegisterService } from '../../services/register.service';
-import { decodeToken } from '../../util/jwt-helper';
+import { JwtHelperService } from '../../services/jwt-helper.service'; 
 
 
 @Component({
@@ -23,7 +23,8 @@ export class OtpVerificationComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private registerService:RegisterService
+    private registerService:RegisterService,
+    private jwtHelper: JwtHelperService
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +45,7 @@ export class OtpVerificationComponent implements OnInit {
           alert(response);
           this.token = localStorage.getItem('jwtToken') || '{}';
       
-        const decodedToken = decodeToken(this.token);
+        const decodedToken = this.jwtHelper.decodeToken(this.token);
           
         console.log(decodedToken);
         if (decodedToken?.role) {

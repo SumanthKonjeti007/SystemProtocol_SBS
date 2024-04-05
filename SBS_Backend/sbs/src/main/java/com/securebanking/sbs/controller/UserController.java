@@ -29,23 +29,45 @@ public class UserController {
 
     @PostMapping("/createOrUpdateUser")
     @CrossOrigin(origins = "*")
-    public ResponseEntity<String> createOrUpdateUser(@Valid @RequestBody UserDto userDto) {
+    @JwtTokenRequired
+    public ResponseEntity<Object> createOrUpdateUser(@Valid @RequestBody UserDto userDto) {
         try {
             HttpStatus result = userService.createOrUpdateUser(userDto);
             if (HttpStatus.OK == result) {
-                return ResponseEntity.ok("User created/updated successfully");
+                return ResponseEntity.status(HttpStatus.OK).body("User created/Updated successfully.");
             } else {
-                throw new Exception();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
 
         } catch (UserNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         } catch (UserRoleNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User role not found");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
         }
     }
+
+    @PostMapping("/register")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<Object> register(@Valid @RequestBody UserDto userDto) {
+        try {
+            HttpStatus result = userService.register(userDto);
+            if (HttpStatus.OK == result) {
+                return ResponseEntity.status(HttpStatus.OK).body("Customer Registered successfully.");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Service error");
+            }
+
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        } catch (UserRoleNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User role not found");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
+        }
+    }
+
 
     @PostMapping("/login")
     @CrossOrigin("*")
@@ -57,6 +79,7 @@ public class UserController {
 
     @PostMapping("/validate-otp")
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public ResponseEntity<String> validateOtp(@RequestBody Map<String, String> otpRequest) {
         String email = otpRequest.get("email");
         String otpEnteredByUser = otpRequest.get("otp");
@@ -71,7 +94,7 @@ public class UserController {
     }
 
     @GetMapping("/userProfile")
-//    @JwtTokenRequired
+    @JwtTokenRequired
     @CrossOrigin(origins = "*")
     public UserDto getUserProfile(@RequestParam Integer id) {
         return userService.getUserById(id);
@@ -79,6 +102,7 @@ public class UserController {
 
     @PostMapping("/deactiveUser")
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public ResponseEntity<String> deactiveUser(@RequestParam Integer id) {
 
         try {
@@ -97,6 +121,7 @@ public class UserController {
 
     @PostMapping("/activateUser")
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public ResponseEntity<String> activateUser(@RequestParam Integer id) {
 
         try {

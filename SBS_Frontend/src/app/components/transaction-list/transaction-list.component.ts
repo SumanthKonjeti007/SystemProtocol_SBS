@@ -5,7 +5,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { IntheaderComponent } from '../../shared/intheader/intheader.component';
 import { TransactionListService } from '../../services/transactionList.service';
 import { transaction } from '../../services/transaction';
-import { decodeToken } from '../../util/jwt-helper';
+import { JwtHelperService } from '../../services/jwt-helper.service'; 
+import { UserRoles } from '../../user-roles';
 
 @Component({
   selector: 'app-transaction-list',
@@ -16,12 +17,14 @@ export class TransactionListComponent implements OnInit {
   transactions : transaction[] = [];
   decodedToken: any | null;
 
-  constructor(private transactionListService: TransactionListService) {}
+  constructor(private transactionListService: TransactionListService, private jwtHelper: JwtHelperService) {}
 
   ngOnInit(): void {
+    if (this.jwtHelper.checkSessionValidity(UserRoles.internal)){
     this.getAllTransactions();
     const token = localStorage.getItem('jwtToken')|| '{}';;
-   this.decodedToken = decodeToken(token);
+   this.decodedToken = this.jwtHelper.decodeToken(token);
+  }
   }
 
   public getAllTransactions(): void {

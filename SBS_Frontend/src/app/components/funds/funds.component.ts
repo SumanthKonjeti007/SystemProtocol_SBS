@@ -1,6 +1,8 @@
 // funds.component.ts
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '../../services/jwt-helper.service';
+import { UserRoles } from '../../user-roles';
 
 @Component({
   selector: 'app-funds',
@@ -8,7 +10,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./funds.component.css']
 })
 export class FundsComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private jwtHelper: JwtHelperService) {}
+
+  ngOnInit(): void {
+    if (this.jwtHelper.checkSessionValidity(UserRoles.customer)){
+    }
+  }
 
   performTransfer(selectedOption: string) {
     // Redirect to another component based on the selected option

@@ -7,6 +7,7 @@ import com.securebanking.sbs.dto.TransactionDto;
 import com.securebanking.sbs.dto.UserProfileUpdateRequestDto;
 import com.securebanking.sbs.model.Transaction;
 import com.securebanking.sbs.model.UserProfileUpdateRequest;
+import com.securebanking.sbs.util.JwtTokenRequired;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,12 +34,14 @@ public class RequestController {
 
     @PostMapping("/request")
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public TransactionDto newTransactionRequest(@RequestBody TransactionDto transactionDto){
         return requestService.createTransactionRequest(transactionDto);
     }
 
     @GetMapping("/pendingProfileRequests")
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public List<UserProfileUpdateRequestDto> getPendingUpdateRequests() {
         return requestService.getPendingUpdateRequests();
     }
@@ -50,6 +53,7 @@ public class RequestController {
 //    }
     @PostMapping("/updateUserProfile")  // send data to update as json string of new user data in UpdatdData variable.
     @CrossOrigin(origins =  "*")
+    @JwtTokenRequired
     public UserProfileUpdateRequestDto createUpdateProfileRequest(@RequestBody UserProfileUpdateRequestDto userProfileUpdateRequestDto)  {
         return requestService.createUpdateProfileRequest(userProfileUpdateRequestDto);
 
@@ -57,6 +61,7 @@ public class RequestController {
 
     @PostMapping("/approveRequest") // POST method for approval of transactions
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public ResponseEntity<String> approveTransaction(@RequestBody TransactionAuthorizationDto transactionAuthorizationDto) {
         try {
             TransactionAuthorizationDto approvedTransaction = requestService.approveTransactionRequest(transactionAuthorizationDto);
@@ -69,6 +74,7 @@ public class RequestController {
 
     @PostMapping("/rejectRequest") // POST method for approval of transactions
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public ResponseEntity<String> rejectTransaction(@RequestBody TransactionAuthorizationDto transactionAuthorizationDto) {
         try {
             TransactionAuthorizationDto approvedTransaction = requestService.rejectTransactionRequest(transactionAuthorizationDto);
@@ -81,6 +87,7 @@ public class RequestController {
 
     @GetMapping("/allTransactions")
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public List<Transaction> getAllTransactions() {
         return requestService.getAllTransactions();
     }
@@ -92,13 +99,30 @@ public class RequestController {
 //    }
     @GetMapping("/allTransaction")
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public List<Transaction> getAllTransactionsUsingSenderId(@RequestParam Integer userId) {
         return requestService.getAllTransactionsUsingSenderId(userId);
 }
+
+
     @GetMapping("/allTransactionbyAccount")
     @CrossOrigin(origins = "*")
-//    @JwtTokenRequired
+   @JwtTokenRequired
     public List<Transaction> getAllTransactionsUsingaccountNumber(@RequestParam String accNumber) {
         return requestService.getAllTransactionsUsingaccountNumber(accNumber);
     }
+
+    @PostMapping("/updateTransaction")
+    @JwtTokenRequired
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<Object> updateTransaction(@RequestBody TransactionDto updatedTransaction) {
+        try {
+            // Update the transaction with the provided transactionId using updatedTransaction
+            TransactionDto result = requestService.updateTransaction(updatedTransaction);
+            return ResponseEntity.ok(result); // Return the updated transaction
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
+        }
+    }
+
 }

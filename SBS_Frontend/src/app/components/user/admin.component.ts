@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { user } from '../../services/user'; // Adjust the path as necessary
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../../services/admin.service';
+import { JwtHelperService } from '../../services/jwt-helper.service';
+import { UserRoles } from '../../user-roles';
 
 @Component({
   selector: 'app-user-list',
@@ -11,12 +13,18 @@ import { AdminService } from '../../services/admin.service';
 })
 export class AdminComponent implements OnInit {
   users: user[] = [];
+  token = localStorage.getItem('jwtToken')|| '{}';
+  decodedToken = this.jwtHelper.decodeToken(this.token);
   
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private jwtHelper: JwtHelperService) {}
 
   ngOnInit(): void {
-    this.getUsers();
+
+    if (this.jwtHelper.checkSessionValidity(UserRoles.admin)){
+      this.getUsers();
+    }
+    
   }
 
   public getUsers(): void {

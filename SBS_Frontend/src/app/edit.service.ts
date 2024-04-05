@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { transaction } from './services/transaction';
 
@@ -8,14 +8,18 @@ import { transaction } from './services/transaction';
 })
 export class EditService {
   private baseUrl = 'http://localhost:8080/api/v1/transaction/';
+  private token = localStorage.getItem('jwtToken') || null;
 
   constructor(private http: HttpClient) { }
 
-  getTransactionById(transactionId: number): Observable<transaction> {
-    return this.http.get<transaction>(`${this.baseUrl}${transactionId}`);
-  }
-
   updateTransaction(transaction: transaction): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}${transaction.transactionId}`, transaction);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+    
+    return this.http.post<any>(`${this.baseUrl}updateTransaction`,transaction, httpOptions);
   }
 }
