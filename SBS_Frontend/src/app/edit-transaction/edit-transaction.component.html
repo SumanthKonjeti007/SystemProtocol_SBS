@@ -1,34 +1,36 @@
 <div>
     <h2>Edit Transaction</h2>
-    <div *ngIf="transaction">
-        <div>
-            <label>Transaction ID:</label>
-            <input type="text" [ngModel]="transaction?.transactionId" >
+    <form #transactionForm="ngForm" (ngSubmit)="saveChanges(transactionForm)">
+        <div class="form-group">
+            <label for="transactionType">Transaction Type</label>
+            <select id="transactionType" [(ngModel)]="transaction.transactionType" name="transactionType" required>
+                <option value="CREDIT">Credit</option>
+                <option value="DEBIT">Debit</option>
+            </select>
         </div>
-        <div>
-            <label>Sender Account:</label>
-            <input type="text" [ngModel]="transaction?.senderAcc?.accountNumber" >
+
+        <div class="form-group">
+            <label for="senderAccount">Sender Account Number</label>
+            <input type="text" id="senderAccount" [ngModel]="transaction.senderAcc.accountNumber" (ngModelChange)="transaction.senderAcc.accountNumber = $event" name="senderAccount" required>
         </div>
-        <div>
-            <label>Receiver Account:</label>
-            <input type="text" [ngModel]="transaction?.receiverAcc?.accountNumber" >
+
+        <div class="form-group">
+            <label for="receiverAccount">Receiver Account Number</label>
+            <input type="text" id="receiverAccount" [ngModel]="transaction.receiverAcc.accountNumber" (ngModelChange)="transaction.receiverAcc.accountNumber = $event" name="receiverAccount" required>
         </div>
-        <div>
-            <label>Transaction Type:</label>
-            <input type="text" [ngModel]="transaction?.transactionType">
+
+        <div class="form-group">
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" [ngModel]="transaction.amount" (ngModelChange)="transaction.amount = $event" name="amount" required>
         </div>
-        <div>
-            <label>Amount:</label>
-            <input type="text" [ngModel]="transaction?.amount">
+
+        <div class="form-group">
+            <label for="status">Status</label>
+            <input type="text" id="status" [ngModel]="transaction.status" (ngModelChange)="transaction.status = $event" name="status" required>
         </div>
-        <div>
-            <label>Created Time:</label>
-            <input type="text" [ngModel]="transaction?.createdtime" >
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
         </div>
-        <div>
-            <label>Status:</label>
-            <input type="text" [ngModel]="transaction?.status">
-        </div>
-        <button (click)="saveChanges()">Save Changes</button>
-    </div>
+    </form>
 </div>

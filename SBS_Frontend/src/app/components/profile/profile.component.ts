@@ -2,8 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
-import { decodeToken } from '../../util/jwt-helper';
+import { JwtHelperService } from '../../services/jwt-helper.service'; 
 import { user } from '../../services/user';
+import { UserRoles } from '../../user-roles';
 
 @Component({
   selector: 'app-profile',
@@ -14,12 +15,14 @@ export class ProfileComponent implements OnInit {
   userData!: user;
   token: any;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router, private jwtHelper: JwtHelperService) {}
 
   ngOnInit(): void {
+
+    if (this.jwtHelper.checkSessionValidity(UserRoles.customer)){
     this.token = localStorage.getItem('jwtToken') || '{}';
     
-    const decodedToken = decodeToken(this.token);
+    const decodedToken = this.jwtHelper.decodeToken(this.token);
     // console.log(decodedToken);
     if (decodedToken?.userId) {
       this.userService.getUserData(decodedToken.userId)
@@ -33,6 +36,7 @@ export class ProfileComponent implements OnInit {
           }
         )
   }
+}
 }
 
   updateProfile(): void {

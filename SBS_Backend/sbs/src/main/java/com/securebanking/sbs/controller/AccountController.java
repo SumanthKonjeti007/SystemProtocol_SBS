@@ -5,6 +5,7 @@ import com.securebanking.sbs.controller.service.RequestService;
 import com.securebanking.sbs.dto.AccountDto;
 import com.securebanking.sbs.dto.TransactionDto;
 import com.securebanking.sbs.repository.AccountRepo;
+import com.securebanking.sbs.util.JwtTokenRequired;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ public class AccountController {
     private RequestService requestService;
     @PostMapping("/createAccount")
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public ResponseEntity<String> createAccount(@RequestBody AccountDto accountDto) {
         accountService.createAccount(accountDto);
         return new ResponseEntity<>("Account created successfully.", HttpStatus.CREATED);
@@ -37,6 +39,7 @@ public class AccountController {
 
     @PutMapping("/updateAccount/{accountId}")
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public ResponseEntity<?> updateAccount(@PathVariable Long accountId, @RequestBody AccountDto accountDto){
         accountService.updateAccount(accountId, accountDto);
         return ResponseEntity.ok().build(); // Assuming successful update
@@ -44,6 +47,7 @@ public class AccountController {
 
     @GetMapping("/user/{userId}/accountDetails")
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public ResponseEntity<Map<String, Object>> getAllUserAccounts(@PathVariable Integer userId) {
         List<AccountDto> accountDto = accountService.getAllAccountsForUser(userId);
         Map<String, Object> response = new HashMap<>();
@@ -60,6 +64,7 @@ public class AccountController {
     //Request Types - TransferFunds, Credit, Debit and delete
     @PostMapping("/{transactionType}/request")
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public ResponseEntity<String> transactionRequest(@RequestBody TransactionDto transactionDto) {
         requestService.createTransactionRequest(transactionDto);
         return ResponseEntity.ok(String.format("%s request created successfully", transactionDto.getTransactionType()));
@@ -67,6 +72,7 @@ public class AccountController {
 
     @PostMapping("/DELETE")
     @CrossOrigin(origins = "*")
+    @JwtTokenRequired
     public ResponseEntity<String> transactionDeleteRequest(@RequestBody TransactionDto transactionDto) {
         requestService.createDeleteTransactionRequest(transactionDto, "DELETE");
         return ResponseEntity.ok(String.format("%s request created successfully", transactionDto.getTransactionType()));

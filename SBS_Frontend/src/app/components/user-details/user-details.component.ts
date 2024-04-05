@@ -4,6 +4,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserDetailsService } from '../../services/user-details.service';
 import { interval, Observable, Subject } from 'rxjs';
 import { takeUntil, switchMap } from 'rxjs/operators';
+import { JwtHelperService } from '../../services/jwt-helper.service';
+import { UserRoles } from '../../user-roles';
 //import { UserService } from '../../services/user.service';
 
 @Component({
@@ -14,10 +16,13 @@ import { takeUntil, switchMap } from 'rxjs/operators';
 export class UserDetailsComponent implements OnInit, OnDestroy {
   users: any[] = [];
   private unsubscribe$: Subject<void> = new Subject<void>();
+  token = localStorage.getItem('jwtToken')|| '{}';
+  decodedToken = this.jwtHelper.decodeToken(this.token);
 
-  constructor(private userService: UserDetailsService) { }
+  constructor(private userService: UserDetailsService, private jwtHelper: JwtHelperService) { }
 
   ngOnInit(): void {
+    if (this.jwtHelper.checkSessionValidity(UserRoles.admin)){
     // Fetch user details initially
     this.fetchUserDetails();
 
@@ -35,6 +40,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
           console.error('Error fetching user details:', error);
         }
       );
+  }
   }
 
   ngOnDestroy(): void {

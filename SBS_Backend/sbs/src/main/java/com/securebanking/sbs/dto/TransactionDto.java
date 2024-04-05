@@ -1,5 +1,6 @@
 package com.securebanking.sbs.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.securebanking.sbs.enums.RequestStatus;
 import com.securebanking.sbs.model.Account;
 import com.securebanking.sbs.model.User;
@@ -7,22 +8,25 @@ import com.securebanking.sbs.model.User;
 
 public class TransactionDto {
 
-    private Long transactionId;
+    private Integer transactionId;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User user;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Account receiverAcc;
 
     private String transactionType;
 
     private String amount;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Account senderAcc;
 
     private RequestStatus status;
 
-    public Long getTransactionId() {
+    public Integer getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(Long transactionId) {
+    public void setTransactionId(Integer transactionId) {
         this.transactionId = transactionId;
     }
 

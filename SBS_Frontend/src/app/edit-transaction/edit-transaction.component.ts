@@ -1,7 +1,10 @@
 import { transaction } from './../services/transaction';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EditService } from '../edit.service'; // Adjust import
+import { JwtHelperService } from '../services/jwt-helper.service';
+import { UserRoles } from '../user-roles';
 
 
 @Component({
@@ -13,16 +16,19 @@ export class EditTransactionComponent implements OnInit {
   transactionId!: number;
   transaction!: transaction;
 
-  constructor(private route: ActivatedRoute, private editService: EditService) { }
-
+  constructor(private route: ActivatedRoute, private editService: EditService, private router: Router, private jwtHelper: JwtHelperService) { }
+ 
   ngOnInit(): void {
+    this.jwtHelper.checkSessionValidity(UserRoles.internal);
       this.transaction = history.state.transaction;
       console.log(this.transaction)
       
   }
 
 
-  saveChanges(): void {
+  saveChanges(form: NgForm): void {
+    console.log(form.value);
+    console.log(this.transaction)
     this.editService.updateTransaction(this.transaction).subscribe(
       () => {
         console.log('Transaction updated successfully');
@@ -33,5 +39,14 @@ export class EditTransactionComponent implements OnInit {
         // Handle error
       }
     );
+    this.router.navigate(['/int-transactions']);
   }
+
+  updateReceiverAccount(accountNumber: string) {
+    if (this.transaction && this.transaction.receiverAcc) {
+        this.transaction.receiverAcc.accountNumber = accountNumber;
+    }
+}
+
+
 }

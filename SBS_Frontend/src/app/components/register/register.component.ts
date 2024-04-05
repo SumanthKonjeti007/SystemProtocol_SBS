@@ -1,15 +1,20 @@
 import { RegisterService } from './../../services/register.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { passwordMatchValidator } from '../../shared/password-match.directive';
 import { user } from '../../services/user';
+import { ActivatedRoute, Router } from '@angular/router';
+import { JwtHelperService } from '../../services/jwt-helper.service';
+import { UserRoles } from '../../user-roles';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
+  fromAdmin: boolean = false
+  roleId= UserRoles.customer ;
   registerForm = this.fb.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
@@ -25,8 +30,21 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private registerService: RegisterService
-  ) {}
+    private registerService: RegisterService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private jwtHelper: JwtHelperService
+  ) {
+    if (this.route.snapshot.queryParamMap.has('fromAdmin')) {
+      this.fromAdmin = this.route.snapshot.queryParamMap.get('fromAdmin') === 'true';
+    this.roleId = UserRoles.internal;
+    this.jwtHelper.checkSessionValidity(UserRoles.admin);
+  }
+}
+ngOnInit(): void {
+  // Initialization logic can go here if needed
+}
+
 
   get firstName() {
     return this.registerForm.controls['firstName'];
@@ -73,22 +91,49 @@ export class RegisterComponent {
       status: 'Active',
       userId: undefined,
       role: {
-        roleId: 2,
+        roleId: this.roleId,
         roleName: undefined
       },
       token: undefined
     };
   
+    // this.registerService.register(newUser)
+    // .subscribe(
+    //   (response: any) => {
+    //     console.log('Response from backend:', response);
+    //     if (typeof response === 'string' && response.startsWith('User created/updated successfully')) {
+    //       console.log('User signed up successfully!');
+    //       alert('User signed up successfully!');
+    //       // Redirect to the dashboard page
+    //       this.router.navigate(['/login']);
+    //     } else {
+    //       console.error('Unexpected response from backend:', response);
+    //       alert('Unexpected response from backend');
+    //     }
+    //   },
+    //   (error: any) => {
+    //     console.error('Error signing up:', error);
+    //     // Handle error, e.g., display error message
+    //     alert('Error signing up: ' + error.message);
+    //   }
+    // );
+    console.log(newUser);
     this.registerService.register(newUser)
   .subscribe(
     (response: any) => {
       console.log('Response from backend:', response);
-      if (typeof response === 'string' && response.startsWith('User created/updated successfully')) {
+      if (typeof response === 'string' && response.startsWith('Customer Registered successfully.')) {
         console.log('User signed up successfully!');
         alert('User signed up successfully!');
         // Redirect to the dashboard page
-        // this.router.navigate(['/dashboard']);
-      } else {
+        this.router.navigate(['/login']);
+      } 
+      else if(typeof response === 'string' && response.startsWith('User created/Updated successfully.')){
+        console.log('Internal user created successfully!');
+        alert('Internal user created successfully!');
+        // Redirect to the dashboard page
+      }
+      else {
         console.error('Unexpected response from backend:', response);
         alert('Unexpected response from backend');
       }
@@ -99,7 +144,8 @@ export class RegisterComponent {
       alert('Error signing up: ' + error.message);
     }
   );
-  }
+
+}
   
   
 }

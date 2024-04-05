@@ -54,6 +54,7 @@ import { IntTransactionsComponent } from './int-transactions/int-transactions.co
 //import { ProfileComponent } from './profile/profile.component';
 import { IntUpdateProfileComponent } from './components/int-update-profile/int-update-profile.component';
 import { EditTransactionComponent } from './edit-transaction/edit-transaction.component';
+import { JwtHelperService } from './services/jwt-helper.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,7 +98,8 @@ import { EditTransactionComponent } from './edit-transaction/edit-transaction.co
     TransactionListModule
     //NgbModule,
   ],
-  providers: [],
+  
+  providers: [], 
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA] 
 })

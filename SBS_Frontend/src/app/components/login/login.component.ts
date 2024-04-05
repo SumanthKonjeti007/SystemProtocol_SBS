@@ -4,8 +4,7 @@ import { RegisterService } from '../../services/register.service';
 import { Router } from '@angular/router';
 import { user } from '../../services/user';
 import { ReactiveFormsModule } from '@angular/forms';
-import {decodeToken} from '../../util/jwt-helper';
-
+import { JwtHelperService } from '../../services/jwt-helper.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,7 +19,8 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder,
     private registerService: RegisterService,
-    private router: Router) {}
+    private router: Router,
+    private jwtHelper: JwtHelperService) {}
 
   get username() {
     return this.loginForm.controls['username'];
@@ -43,7 +43,7 @@ export class LoginComponent {
               localStorage.setItem('jwtToken', response.token);
             
               // Decode the JWT token to extract user information
-              const decodedToken = decodeToken(response.token);
+              const decodedToken = this.jwtHelper.decodeToken(response.token);
               console.log(decodedToken);
               if (decodedToken) {
                 console.log('Decoded token:', decodedToken);

@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service'; // Update with the correct path
 import { ReactiveFormsModule } from '@angular/forms';
-import { decodeToken } from '../../util/jwt-helper';
+import { JwtHelperService } from '../../services/jwt-helper.service'; 
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgForm } from '@angular/forms';
+import { UserRoles } from '../../user-roles';
 @Component({
   selector: 'app-update-component',
   templateUrl: './update.component.html',
@@ -14,18 +15,18 @@ import { NgForm } from '@angular/forms';
 export class UpdateComponent implements OnInit {
   updateForm!: FormGroup;
   userData: any;
-  token: string | undefined;
-  decodedToken: any;
   id: any;
   updatedData: any;
+  token = localStorage.getItem('jwtToken')|| '{}';
+  decodedToken = this.jwtHelper.decodeToken(this.token);
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService,private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private userService: UserService,private router: Router, private jwtHelper: JwtHelperService) {}
 
   ngOnInit() {
-    this.token = localStorage.getItem('jwtToken') || '{}';
-    this.decodedToken = decodeToken(this.token);
+    if (this.jwtHelper.checkSessionValidity(UserRoles.customer)){
     this.userData = history.state.userData;
     this.initForm();
+  }
   }
 
   initForm() {
@@ -52,14 +53,14 @@ export class UpdateComponent implements OnInit {
         address: this.updateForm.value.address,
         phoneNumber: this.updateForm.value.phoneNumber,
         role:{
-          roleId: this.decodedToken.role
+          roleId: this.decodedToken?.role
         }
         // Add more fields as needed
       };
       console.log(this.decodedToken);
       const userDetails: any = {
         user:{
-          userId: this.decodedToken.userId 
+          userId: this.decodedToken?.userId 
         },
         updateData: JSON.stringify(this.updatedData)
 

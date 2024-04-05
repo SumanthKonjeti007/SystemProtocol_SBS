@@ -19,6 +19,19 @@ export class HeaderComponent {
       });
   }
 
+  ngOnInit(): void {
+    // Add click event listener to the logout link
+    document.getElementById('logout')?.addEventListener('click', this.logout.bind(this));
+  }
+
+  logout(event: Event) {
+    event.preventDefault(); // Prevent the default link behavior
+    // Remove the JWT token from local storage
+    localStorage.removeItem('jwtToken');
+    // Redirect to the login page
+    this.router.navigate(['/login']);
+  }
+
   toggleDropdown(dropdownName: string) {
     this.dropdowns[dropdownName] = !this.dropdowns[dropdownName];
 

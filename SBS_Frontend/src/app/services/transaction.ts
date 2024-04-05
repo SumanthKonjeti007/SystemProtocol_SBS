@@ -5,9 +5,9 @@ export class transaction {
 
   transactionId?: string;
   user?: user;
-  senderAcc?: account;
-  receiverAcc?: account;
-  transactionType: string | undefined | null;
+  senderAcc!: account;
+  receiverAcc!: account;
+  transactionType?: string ;
   amount?: string;
   createdBy?: string;
   createdtime?: Date;

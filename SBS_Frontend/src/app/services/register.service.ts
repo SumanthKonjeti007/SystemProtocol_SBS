@@ -1,32 +1,48 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { user } from './user';
+import { Router } from '@angular/router';
+import { UserRoles } from '../user-roles';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterService {
-  
+  private patch:any 
   private baseUrl = 'http://localhost:8080/api/v1/';
+  httpOptions: any;
   
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   register(user: user): Observable<any> {
-    const url = this.baseUrl + 'createOrUpdateUser';
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-      responseType: 'text' as 'json' // Specify the response type as text
-    };
-    return this.http.post(url, user, httpOptions)
-      .pipe(
-        catchError((error: any) => {
-          console.error('Error from backend:', error);
-          return throwError(error);
-        })
-      );
+    
+    if (user.role.roleId==UserRoles.internal){
+      const token = localStorage.getItem('jwtToken')
+      this.patch='createOrUpdateUser'
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }),
+        responseType: 'text' as 'json' // Specify the response type as text
+      };
+    }
+    else{
+      this.patch='register';
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          
+        }),
+        responseType: 'text' as 'json' // Specify the response type as text
+      };
+    }
+
+    const url = this.baseUrl + this.patch;
+    console.log(this.httpOptions);
+    console.log(url);
+    return this.http.post(url, user, this.httpOptions);
     
 }
 
@@ -43,9 +59,11 @@ login(username: string, password: string): Observable<user> {
 validateOtp(email: string, otp: string) {
   const url = this.baseUrl + 'validate-otp';
   const body = { email, otp };
+  const token = localStorage.getItem('jwtToken')
   const httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
     }),
     responseType: 'text' as 'json' // Specify the response type as text
   };
