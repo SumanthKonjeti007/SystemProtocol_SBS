@@ -1,13 +1,13 @@
 <app-intheader></app-intheader>
-<div>
+<div class="container">
     <input type="text" [(ngModel)]="accountNumber" placeholder="Enter account number">
-    <button (click)="onSubmit()">Submit</button>
-    <label>
-      <input type="radio" name="transactionScope" (change)="onRadioChange($event)" [checked]="showAll"> All
+    <button class="btn-submit" (click)="onSubmit()">Submit</button>
+    <label class="radio-label">
+        <input type="radio" name="transactionScope" (change)="onRadioChange($event)" [checked]="showAll"> All
     </label>
 </div>
 
-<div *ngIf="transactions.length > 0">
+<div class="transaction-table" *ngIf="transactions.length > 0">
     <table>
         <thead>
             <tr>
@@ -18,7 +18,7 @@
                 <th>Amount</th>
                 <th>Created Time</th>
                 <th>Status</th>
-                <th>Actions</th> <!-- Added column for actions -->
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +31,7 @@
                 <td>{{ transaction?.createdtime }}</td>
                 <td>{{ transaction?.status }}</td>
                 <td>
-                        <button (click)="updateTransaction(transaction)">Edit</button> <!-- Button wrapped within anchor tag -->
+                    <button class="btn-edit" (click)="updateTransaction(transaction)">Edit</button>
                 </td>
             </tr>
         </tbody>
