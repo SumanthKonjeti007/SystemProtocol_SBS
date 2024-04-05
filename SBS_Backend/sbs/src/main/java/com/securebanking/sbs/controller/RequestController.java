@@ -95,4 +95,10 @@ public class RequestController {
     public List<Transaction> getAllTransactionsUsingSenderId(@RequestParam Integer userId) {
         return requestService.getAllTransactionsUsingSenderId(userId);
 }
+    @GetMapping("/allTransactionbyAccount")
+    @CrossOrigin(origins = "*")
+//    @JwtTokenRequired
+    public List<Transaction> getAllTransactionsUsingaccountNumber(@RequestParam String accNumber) {
+        return requestService.getAllTransactionsUsingaccountNumber(accNumber);
+    }
 }

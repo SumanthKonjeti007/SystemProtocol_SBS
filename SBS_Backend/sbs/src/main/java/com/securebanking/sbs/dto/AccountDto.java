@@ -5,7 +5,7 @@ import com.securebanking.sbs.model.User;
 import java.math.BigDecimal;
 
 public class AccountDto {
-    private Long accountId;
+    private Integer accountId;
 //    private Integer user;
     private Integer userId;
     private String accountNumber;
@@ -28,11 +28,11 @@ public class AccountDto {
         this.userId = userId;
     }
 
-    public Long getAccountId() {
+    public Integer getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Long accountId) {
+    public void setAccountId(Integer accountId) {
         this.accountId = accountId;
     }
 

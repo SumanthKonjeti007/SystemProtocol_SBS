@@ -21,6 +21,8 @@ import { HeaderAdminComponent } from './components/header-admin/header-admin.com
 import { TransactionListComponent} from './components/transaction-list/transaction-list.component';
 import { InternalUserHomeComponent } from './components/internal-user-home/internal-user-home.component';
 import { IntUpdateProfileComponent } from './components/int-update-profile/int-update-profile.component';
+import { IntTransactionsComponent } from './int-transactions/int-transactions.component';
+import { EditTransactionComponent } from './edit-transaction/edit-transaction.component';
 const routes: Routes = [
   {
     path:'login',
@@ -88,6 +90,14 @@ const routes: Routes = [
   {
     path:'header-admin',
     component: HeaderAdminComponent
+  },
+  {
+    path:'int-transactions',
+    component: IntTransactionsComponent
+  },
+  {
+    path:'edit-Transaction',
+    component: EditTransactionComponent
   },
   {
     path:'', redirectTo:'register',pathMatch:'full'
