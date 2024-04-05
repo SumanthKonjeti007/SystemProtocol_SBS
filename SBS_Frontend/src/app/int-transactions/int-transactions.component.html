@@ -1,0 +1,38 @@
+<div>
+    <input type="text" [(ngModel)]="accountNumber" placeholder="Enter account number">
+    <button (click)="onSubmit()">Submit</button>
+    <label>
+      <input type="radio" name="transactionScope" (change)="onRadioChange($event)" [checked]="showAll"> All
+    </label>
+</div>
+
+<div *ngIf="transactions.length > 0">
+    <table>
+        <thead>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Sender Account</th>
+                <th>Receiver Account</th>
+                <th>Transaction Type</th>
+                <th>Amount</th>
+                <th>Created Time</th>
+                <th>Status</th>
+                <th>Actions</th> <!-- Added column for actions -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let transaction of transactions">
+                <td>{{ transaction.transactionId }}</td>
+                <td>{{ transaction.senderAcc.accountNumber }}</td>
+                <td>{{ transaction.receiverAcc.accountNumber }}</td>
+                <td>{{ transaction.transactionType }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.createdtime }}</td>
+                <td>{{ transaction.status }}</td>
+                <td>
+                        <button (click)="updateTransaction(transaction)">Edit</button> <!-- Button wrapped within anchor tag -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

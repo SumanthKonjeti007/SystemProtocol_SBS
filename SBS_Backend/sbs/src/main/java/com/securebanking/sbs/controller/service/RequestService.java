@@ -288,5 +288,10 @@ public TransactionDto createTransactionRequest(TransactionDto transactionDto) {
     public List<Transaction> getAllTransactionsUsingSenderId(Integer id) {
         return transactionRepo.findAllTransactionsByAccountId(id);
     }
+
+    public List<Transaction> getAllTransactionsUsingaccountNumber(String accNumber) {
+        Account account = accountRepo.findbyaccountnumber(accNumber);
+        return transactionRepo.findAllTransactionsByAccountNumber(account.getAccountId());
+    }
 }
 

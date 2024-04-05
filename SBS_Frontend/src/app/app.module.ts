@@ -45,6 +45,7 @@ import { SharedModule } from './shared/shared.module';
 
 //import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { TransactionListModule } from './components/transaction-list/transaction-list.module';
+import { IntTransactionsComponent } from './int-transactions/int-transactions.component';
 //import { TfInstantComponent } from './components/tf-instant/tf-instant.component';
 //import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 //import { NgModule } from '@angular/core';
@@ -52,6 +53,7 @@ import { TransactionListModule } from './components/transaction-list/transaction
 //import { UpdateComponent } from './path-to-your-update-component/update.component'; // Update the path
 //import { ProfileComponent } from './profile/profile.component';
 import { IntUpdateProfileComponent } from './components/int-update-profile/int-update-profile.component';
+import { EditTransactionComponent } from './edit-transaction/edit-transaction.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,6 +77,8 @@ import { IntUpdateProfileComponent } from './components/int-update-profile/int-u
     OtpVerificationComponent,
     CapitalizePipe,
     IntUpdateProfileComponent,
+    IntTransactionsComponent,
+    EditTransactionComponent
   ],
   imports: [
     BrowserModule,

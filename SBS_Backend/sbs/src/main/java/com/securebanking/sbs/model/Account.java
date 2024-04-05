@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long accountId;
+    private Integer accountId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
@@ -27,11 +27,11 @@ public class Account {
     @Column(nullable = false)
     private String status;
 
-    public Long getAccountId() {
+    public Integer getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Long accountId) {
+    public void setAccountId(Integer accountId) {
         this.accountId = accountId;
     }
 
