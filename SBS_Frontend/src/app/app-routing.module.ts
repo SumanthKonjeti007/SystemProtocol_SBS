@@ -23,6 +23,7 @@ import { InternalUserHomeComponent } from './components/internal-user-home/inter
 import { IntUpdateProfileComponent } from './components/int-update-profile/int-update-profile.component';
 import { IntTransactionsComponent } from './int-transactions/int-transactions.component';
 import { EditTransactionComponent } from './edit-transaction/edit-transaction.component';
+import { OrderComponent } from './components/orders/orders.component';
 const routes: Routes = [
   {
     path:'login',
@@ -98,6 +99,10 @@ const routes: Routes = [
   {
     path:'edit-Transaction',
     component: EditTransactionComponent
+  },
+  {
+    path:'payment-gateway',
+    component: OrderComponent
   },
   {
     path:'', redirectTo:'register',pathMatch:'full'

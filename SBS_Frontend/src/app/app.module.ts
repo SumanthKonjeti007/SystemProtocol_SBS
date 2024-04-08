@@ -55,6 +55,7 @@ import { IntTransactionsComponent } from './int-transactions/int-transactions.co
 import { IntUpdateProfileComponent } from './components/int-update-profile/int-update-profile.component';
 import { EditTransactionComponent } from './edit-transaction/edit-transaction.component';
 import { JwtHelperService } from './services/jwt-helper.service';
+import { OrderComponent } from './components/orders/orders.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,7 +80,8 @@ import { JwtHelperService } from './services/jwt-helper.service';
     CapitalizePipe,
     IntUpdateProfileComponent,
     IntTransactionsComponent,
-    EditTransactionComponent
+    EditTransactionComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

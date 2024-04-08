@@ -43,6 +43,7 @@ export class TransactionService {
         'Authorization': `Bearer ${this.token}`
       })
     };
+    console.log(userId);
     return this.http.get<transaction[]>(`${this.baseUrl}transaction/allTransactions?userId=${userId}`,httpOptions)
       .pipe(catchError(this.handleError));
   }

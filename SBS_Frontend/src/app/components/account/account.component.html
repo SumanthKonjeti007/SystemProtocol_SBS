@@ -21,7 +21,10 @@
         <td>{{ account.accountType }}</td>
         <td>{{ account.status }}</td>
         <td>{{ account.balance }}</td>
-        <td><button class="delete-btn" (click)="initiateDeleteRequest(i)" [disabled]="account.requestPending">Delete Account</button></td>
+        <td><button class="delete-btn" 
+          *ngIf="account.status !== 'INACTIVE'" 
+          (click)="initiateDeleteRequest(i)" 
+          [disabled]="account.requestPending">Delete Account</button></td>
       </tr>
   </tbody>
 </table>
