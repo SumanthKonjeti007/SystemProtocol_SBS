@@ -1,6 +1,6 @@
 import { RegisterService } from './../../services/register.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordMatchValidator } from '../../shared/password-match.directive';
 import { user } from '../../services/user';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,6 +15,7 @@ import { UserRoles } from '../../user-roles';
 export class RegisterComponent implements OnInit{
   fromAdmin: boolean = false
   roleId= UserRoles.customer ;
+  
   registerForm = this.fb.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
@@ -22,6 +23,7 @@ export class RegisterComponent implements OnInit{
     password: ['', Validators.required],
     confirmPassword: ['', Validators.required],
     phoneNumber: ['', Validators.required],
+    accountType: ['', Validators.required],
     emailAddress: ['', [Validators.required, Validators.email]],
     address: ['', Validators.required]
   }, {
@@ -33,7 +35,8 @@ export class RegisterComponent implements OnInit{
     private registerService: RegisterService,
     private route: ActivatedRoute,
     private router: Router,
-    private jwtHelper: JwtHelperService
+    private jwtHelper: JwtHelperService,
+    private formBuilder: FormBuilder
   ) {
     if (this.route.snapshot.queryParamMap.has('fromAdmin')) {
       this.fromAdmin = this.route.snapshot.queryParamMap.get('fromAdmin') === 'true';
@@ -78,8 +81,19 @@ ngOnInit(): void {
     return this.registerForm.controls['address'];
   }
 
+  get accountType() {
+    return this.registerForm.controls['accountType'];
+  }
+
   signup(formData: any) {
      formData = this.registerForm.value;
+     console.log(formData)
+      if(formData.accountType == 'merchant'){
+        this.roleId = UserRoles.merchant
+      }
+      if(formData.accountType == 'customer'){
+        this.roleId = UserRoles.customer
+      }
     const newUser: user = {
       username: formData.username,
       firstName: formData.firstName,

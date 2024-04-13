@@ -44,7 +44,7 @@ export class TransactionService {
       })
     };
     console.log(userId);
-    return this.http.get<transaction[]>(`${this.baseUrl}transaction/allTransactions?userId=${userId}`,httpOptions)
+    return this.http.get<transaction[]>(`${this.baseUrl}transaction/allTransaction?userId=${userId}`,httpOptions)
       .pipe(catchError(this.handleError));
   }
 

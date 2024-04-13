@@ -1,4 +1,5 @@
 package com.securebanking.sbs.model;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedBy;
@@ -9,11 +10,11 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "orders")
-public class Order {
+@Table(name = "payments")
+public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer orderId;
+    private Integer paymentId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
@@ -24,25 +25,10 @@ public class Order {
     @JoinColumn(name = "senderAcc", nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Account senderAcc;
-    @Column(nullable = false)
-    private String amount;
-    private String currency = "INR";
-    private String receipt;
-    private String status; // For simplicity: "created", "paid"
-    @CreatedBy
-    @Column(name = "created_by")
-    private String createdBy;
-    @CreatedDate
-    @Column(name = "created_time")
-    private LocalDateTime createdtime;
-    @LastModifiedBy
-    @Column(name = "last_modified_by")
-    private String lastModifiedBy;
 
-    @LastModifiedDate
-    @Column(name = "last_modified_time")
-    private LocalDateTime lastModifiedtime;
-
+//    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "orderId")
+    private Integer orderId;
 
     public Integer getOrderId() {
         return orderId;
@@ -50,6 +36,24 @@ public class Order {
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+
+
+    private String customerAccountNumber;
+    private String transactionType;
+    private String amount;
+    private String currency = "INR";
+    @CreatedBy
+    @Column(name = "created_by")
+    private String createdBy;
+
+    public Integer getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(Integer paymentId) {
+        this.paymentId = paymentId;
     }
 
     public User getUser() {
@@ -68,6 +72,22 @@ public class Order {
         this.senderAcc = senderAcc;
     }
 
+    public String getCustomerAccountNumber() {
+        return customerAccountNumber;
+    }
+
+    public void setCustomerAccountNumber(String customerAccountNumber) {
+        this.customerAccountNumber = customerAccountNumber;
+    }
+
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
+    }
+
     public String getAmount() {
         return amount;
     }
@@ -82,22 +102,6 @@ public class Order {
 
     public void setCurrency(String currency) {
         this.currency = currency;
-    }
-
-    public String getReceipt() {
-        return receipt;
-    }
-
-    public void setReceipt(String receipt) {
-        this.receipt = receipt;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getCreatedBy() {
@@ -132,5 +136,13 @@ public class Order {
         this.lastModifiedtime = lastModifiedtime;
     }
 
-
+    @CreatedDate
+    @Column(name = "created_time")
+    private LocalDateTime createdtime;
+    @LastModifiedBy
+    @Column(name = "last_modified_by")
+    private String lastModifiedBy;
+    @LastModifiedDate
+    @Column(name = "last_modified_time")
+    private LocalDateTime lastModifiedtime;
 }

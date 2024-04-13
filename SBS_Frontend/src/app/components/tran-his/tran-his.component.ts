@@ -19,7 +19,7 @@ export class TranHisComponent implements OnInit {
   constructor(private transactionService: TransactionService, private jwtHelper: JwtHelperService) { }
 
   ngOnInit(): void {
-    if (this.jwtHelper.checkSessionValidity(UserRoles.customer)){
+    if (this.jwtHelper.checkSessionValidityMultiple(UserRoles.customer,UserRoles.merchant)){
     this.token = localStorage.getItem('jwtToken') || '{}';
       
         this.decodedToken = this.jwtHelper.decodeToken(this.token)

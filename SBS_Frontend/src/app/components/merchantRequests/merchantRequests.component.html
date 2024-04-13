@@ -1,0 +1,33 @@
+<app-header></app-header>
+<table>
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Account Number</th>
+      <th>Merchant</th>
+      <th>Status</th>
+      <th>Amount</th>
+      
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Using a nested loop to iterate over the array of order arrays -->
+    <ng-container *ngFor="let orderGroup of allOrders; let i = index">
+      <tr *ngFor="let order of orderGroup; let j = index">
+        <td>{{ order.orderId }}</td>
+        <!-- Assuming the account number is part of the order details -->
+        <td>{{ order.senderAcc?.accountNumber }}</td>
+        <td>{{ order.user?.firstName }}</td>
+        <td>{{ order.status }}</td>
+        <td>{{ order.amount }}</td>
+        
+        <!-- <button *ngIf="order.status !== 'PAID'" (click)="redirectToPaymentGateway(order.amount, order.orderId)">Pay</button> -->
+        <button *ngIf="order.status !== 'PAID'" (click)="redirectToPaymentGateway(order.amount, order.orderId)" class="send-btn">Pay</button>
+<button *ngIf="order.status === 'PAID'" disabled class="send-btn">Pay</button>
+        
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+

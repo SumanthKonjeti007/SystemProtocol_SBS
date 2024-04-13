@@ -20,7 +20,7 @@ export class TransactionListComponent implements OnInit {
   constructor(private transactionListService: TransactionListService, private jwtHelper: JwtHelperService) {}
 
   ngOnInit(): void {
-    if (this.jwtHelper.checkSessionValidity(UserRoles.internal)){
+    if (this.jwtHelper.checkSessionValidityMultiple(UserRoles.customer,UserRoles.merchant)){
     this.getAllTransactions();
     const token = localStorage.getItem('jwtToken')|| '{}';;
    this.decodedToken = this.jwtHelper.decodeToken(token);

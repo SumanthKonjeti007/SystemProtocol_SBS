@@ -21,7 +21,7 @@ export class AccountComponent implements OnInit {
   decodedToken = this.jwtHelper.decodeToken(this.token);
 
   ngOnInit(): void {
-    if (this.jwtHelper.checkSessionValidity(UserRoles.customer)){
+    if (this.jwtHelper.checkSessionValidityMultiple(UserRoles.customer,UserRoles.merchant)){
     // const token = localStorage.getItem('jwtToken');
     if (this.token) {
       // Decode the JWT token to get the userId

@@ -38,10 +38,13 @@ export class CreditComponent implements OnInit{
     private registerService: RegisterService,
     private dialog: MatDialog) {}
 
-  ngOnInit(): void {
-    if (this.jwtHelper.checkSessionValidity(UserRoles.customer)){
-      if (this.token) {
-        const userId = this.decodedToken?.userId;
+    ngOnInit(): void {
+      if (this.jwtHelper.checkSessionValidityMultiple(UserRoles.customer,UserRoles.merchant)){
+      const token = localStorage.getItem('jwtToken');
+      if (token) {
+        // Decode the JWT token to get the userId
+        const decodedToken = this.jwtHelper.decodeToken(token);
+        const userId = decodedToken?.userId;
         if (userId) {
           this.initializeTransaction(userId);
         } else {

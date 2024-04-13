@@ -5,8 +5,9 @@ import { user } from '../../services/user'; // Update import paths if necessary
 import { Order } from '../../services/orders'; // Update import paths if necessary
 import { JwtHelperService } from '../../services/jwt-helper.service'; 
 import { account } from '../../services/account'; // Update import paths if necessary
-
-declare var Razorpay: any;
+import { UserRoles } from '../../user-roles';
+import { ActivatedRoute } from '@angular/router';
+import { AccountService } from '../../services/account.service';
 
 @Component({
   selector: 'app-payment',
@@ -14,175 +15,152 @@ declare var Razorpay: any;
   styleUrls: ['./orders.component.css']
 })
 export class OrderComponent implements OnInit {
-user = new user();
-  order = new Order();
-  senderAcc = new account(); // Assuming `Account` is a class with required properties
-  userId: number | null = null;
-  token = localStorage.getItem('jwtToken')|| '{}';;
-  decodedToken = this.jwtHelper.decodeToken(this.token);
+  user: user = new user();
+  order: Order = new Order();
+  accounts: account[] = [];
+  customerAccount = new account();
+  userRoles = UserRoles;
+  senderAcc: account = new account();
+  accountNumbers: string[] = []; 
+  decodedToken: any;
+  paidOrders: Set<number> = new Set();
+  order_Id: number|undefined;
 
-  constructor(private ordersService: OrdersService, private jwtHelper: JwtHelperService) {}
+  constructor(private ordersService: OrdersService, private jwtHelper: JwtHelperService, private route: ActivatedRoute, 
+    private accountService: AccountService) {}
 
   ngOnInit(): void {
-    // If your token decoding logic is synchronous, you can directly assign to `userId`
-    const userId = this.decodedToken?.userId;
+    // Extract the token from localStorage and decode it
+    const token = localStorage.getItem('jwtToken') || '{}';
+    this.decodedToken = this.jwtHelper.decodeToken(token);
+    // Initialize userId from the decoded token
+    this.user.userId = this.decodedToken?.userId;
+    
+    this.route.queryParams.subscribe(params => {
+      // if (params['accountNumber']) {
+      //   this.senderAcc.accountNumber = params['accountNumber'];
+      // }
+      if (params['amount']) {
+        this.order.amount = params['amount'];
+        this.order_Id = params['orderId'];
+      }
+    });
+  }
+
+  getUserRole(): number {
+    return this.decodedToken?.role || 0;
   }
 
   makePayment(form: NgForm): void {
-    if (form.valid) {
-        console.log(form.value);
-        // if (!form.value.amount || !form.value.account) {
-        //     alert("Please enter a valid amount and account number");
-        //     return;
-        //   }
-        this.senderAcc.accountNumber = form.value.senderAcc;
-        this.order.senderAcc = this.senderAcc;
-
-        this.user.userId = this.decodedToken?.userId;
-        this.order.user = this.user;
-
-        this.order.amount = form.value.amount;
-        this.order.currency = 'INR';
-        console.log(this.order);
-
-    this.ordersService.createRazorpayOrder(this.order).subscribe({
-      next: (response) => {
-        console.log(response);
-        // Initialize Razorpay checkout here using the `options` object
-        const rzp1 = new Razorpay(this.getRazorpayOptions(response.razorpayOrderId));
-        rzp1.open();
-      },
-      error: (error) => {
-        console.error('Error:', error);
-        alert('Failed to initiate payment');
-      },
-    });
-}}
-
-private getRazorpayOptions(orderId: string): any {
-    return {
-      key: "rzp_test_HBDfaKCfV3ywwP", // Use the correct key for production
-      amount: Number(this.order.amount) * 100, // Amount in currency subunits
-      currency: "INR",
-      name: "Razorpay",
-      description: "Test Transaction",
-      order_id: orderId, // The ID returned from the server after order creation
-      handler: (response: any) => {
-        alert("Payment successful. Razorpay payment Id: " + response.razorpay_payment_id);
-        // Implement post-payment logic here
-      },
-      prefill: {
-        name: "Amazon",
-        email: "amazon@example.com",
-        contact: "9999999999",
-      },
-      notes: {
-        address: "Razorpay Corporate Office",
-      },
-      theme: {
-        color: "#3399cc",
-      },
-      // Add display property for QR code
-      display: {
-        qr_code: true, // Make sure QR codes are enabled for your Razorpay account
-      },
-    };
+    const role = this.getUserRole();
+    if (role === this.userRoles.merchant) {
+      this.requestPayment(form);
+    } else if (role === this.userRoles.customer) {
+      this.payToMerchant(form);
+    } else {
+      console.error('Unsupported role');
+    }
   }
-  
+
+  requestPayment(form: NgForm): void {
+    // Handle the request payment logic for merchants
+    if (form.valid) {
+
+      console.log(form.value);
+      this.senderAcc.accountNumber = form.value.senderAcc;
+      this.order.senderAcc = this.senderAcc;
+
+      this.user.userId = this.decodedToken?.userId;
+      this.order.user = this.user;
+
+      this.order.amount = form.value.amount;
+      this.order.currency = 'INR';
+      console.log(this.order);
+
+      // Add the logic for merchants to request payment
+      console.log('Requesting payment:', this.order);
+      this.ordersService.createPaymentRequest(this.order).subscribe({
+        next: (response) => {
+          // Handle the successful payment request
+          console.log('Payment request successful', response);
+        },
+        error: (error) => {
+          // Handle errors
+          console.error('Error:', error);
+        }
+      });
+    }
+  }
+
+payToMerchant(form: NgForm): void {
+  if (form.valid) {
+    console.log(form.value);
+    this.order.amount = form.value.amount;
+
+    this.senderAcc.accountNumber = form.value.senderAcc;
+    this.order.senderAcc = this.senderAcc;
+
+    this.user.userId = this.decodedToken?.userId;
+    this.order.user = this.user;
+
+    this.order.currency = 'INR';
+    if (this.user.userId) {
+      this.accountService.getAllAccounts(this.user.userId).subscribe(
+        //here the customer can have multiple accounts, so the accounts are selected based on the amount request. 
+        //SenderAcc is merchant's account which will be coming from Ui
+        //The customer's account is selected with balance
+        response => {
+          const sufficientBalanceAccount = response.accounts.find(acc => acc.balance >= form.value.amount);
+          if (sufficientBalanceAccount) {
+            this.customerAccount = sufficientBalanceAccount;
+
+            console.log('Paying to merchant:', this.order, this.order.senderAcc, sufficientBalanceAccount);
+
+            this.ordersService.executePaymentToMerchant(this.order, this.customerAccount, this.order_Id).subscribe({
+              next: (response) => {
+                console.log('Payment to merchant successful', response);
+                alert(response.message || 'Payment to merchant processed successfully.'); // Alert the user
+                // Handle further actions after a successful payment here
+                console.log(this.order.orderId);
+                if (this.order.orderId) {
+                  console.log(this.order, this.order.orderId, 'Paid');
+                  this.updateOrderStatus(this.order, this.order.orderId, 'Paid'); // Ensure orderId is a number and is defined
+                } else {
+                  console.error('Order ID is undefined');
+                }
+              },
+              error: (error) => {
+                console.error('Error:', error);
+                alert('Failed to process payment. ' + error.message); // Alert the user in case of error
+              }
+            });
+          } else {
+            console.error('No accounts with sufficient balance to make the payment');
+            alert('No accounts with sufficient balance to make the payment.'); // Alert the user if balance is insufficient
+            // Handle the case when there is no account with sufficient balance
+          }
+        },
+        error => {
+          console.error('Error fetching account details:', error);
+          alert('Error fetching account details: ' + error.message);
+        }
+      );
+    } else {
+      console.error('User ID is undefined');
+      alert('User identification failed.');
+    }
+  }
 }
 
+isOrderPaid(orderId: number): boolean {
+  return this.paidOrders.has(orderId);
+}
 
-// import { Component, OnInit } from '@angular/core';
-// import { OrdersService } from '../../services/orders.service';
-// import { NgForm } from '@angular/forms';
-// import { user } from '../../services/user';
-// import { Order } from '../../services/orders';
-// import { decodeToken } from '../../util/jwt-helper';
-// import { account } from '../../services/account';
+private updateOrderStatus(or: Order, orderId: number,  status: string): void {
+  // Find the order in your orders list and update its status
+  if (or) {
+    or.status = status;
+  }
+}
 
-// declare let Razorpay: any;
-
-// @Component({
-//   selector: 'app-payment',
-//   templateUrl: './orders.component.html',
-//   styleUrls: ['./orders.component.css']
-// })
-// export class OrderComponent implements OnInit {
-//   user = new user();
-//   order = new Order();
-//   senderAcc = new account();
-//   userId: number | null = null;
-//   token: string;
-//   decodedToken: any;
-
-//   constructor(private ordersService: OrdersService) {
-//     this.token = localStorage.getItem('jwtToken') || '{}';
-//     this.decodedToken = decodeToken(this.token);
-//   }
-
-//   ngOnInit(): void {
-//     this.userId = this.decodedToken?.userId;
-//   }
-
-//   makePayment(form: NgForm): void {
-//     if (form.valid) {
-//       this.senderAcc.accountNumber = form.value.senderAcc;
-//       this.order.senderAcc = this.senderAcc;
-//       this.user.userId = this.decodedToken?.userId;
-//       this.order.user = this.user;
-//       this.order.amount = form.value.amount;
-//       this.order.currency = 'INR';
-
-//       this.ordersService.createRazorpayOrder(this.order).subscribe({
-//         next: (response) => {
-//           const options = this.getRazorpayOptions(response.razorpayOrderId);
-//           options.prefill.name = "Customer Name";
-//           options.prefill.email = "customer@example.com";
-//           options.prefill.contact = "9999999999";
-//           options.image = "https://your-logo-url.com/logo.png"; // Add your logo URL here
-
-//           const rzp = new Razorpay(options);
-//           rzp.on('payment.failed', function (response: any) {
-//             console.log(response.error.code);
-//             console.log(response.error.description);
-//             alert('Failed to initiate payment');
-//           });
-//           rzp.open();
-//         },
-//         error: (error) => {
-//           console.error('Error:', error);
-//           alert('Failed to initiate payment');
-//         },
-//       });
-//     }
-//   }
-
-//   private getRazorpayOptions(orderId: string): any {
-//     return {
-//       key: "rzp_test_HBDfaKCfV3ywwP", // Replace with your actual key for production
-//       amount: Number(this.order.amount) * 100, // Amount in currency subunits
-//       currency: "INR",
-//       name: "AMAZON",
-//       description: "Test Transaction",
-//       image: "https://www.javachinna.com/wp-content/uploads/2020/02/android-chrome-512x512-1.png", // Replace with your image URL
-//       order_id: orderId,
-//       handler: (response: any) => {
-//         alert("Payment successful. Razorpay payment Id: " + response.razorpay_payment_id);
-//         // Implement post-payment logic here
-//       },
-//       prefill: {
-//         // Prefill details will be set during the makePayment method call
-//       },
-//       notes: {
-//         address: "Razorpay Corporate Office",
-//       },
-//       theme: {
-//         color: "#3399cc",
-//       },
-//       // Add display property for QR code
-//       display: {
-//         qr_code: true, // Enable QR code display
-//       },
-//     };
-//   }
-// }
+}
