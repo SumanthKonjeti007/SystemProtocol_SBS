@@ -48,6 +48,18 @@ export class TransactionService {
       .pipe(catchError(this.handleError));
   }
 
+  getuserActivity(userId: number): Observable<transaction[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+    console.log(userId);
+    return this.http.get<transaction[]>(`${this.baseUrl}transaction/getUserActivity?userId=${userId}`,httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: any) {
     console.error('An error occurred:', error);
     return throwError(() => new Error('An error occurred; please try again later.'));

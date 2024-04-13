@@ -10,6 +10,10 @@ body, html {
   align-items: center;
 }
 
+body.modal-active .update-container {
+  filter: blur(2px); /* Blurs the content when the modal is active */
+}
+
 /* Style for the container */
 .update-container {
   background-color: #D6E4E5;
@@ -82,4 +86,31 @@ button:disabled {
     width: 90%;
     padding: 15px;
   }
+}
+
+.otp-popup {
+  position: fixed; /* Fixed position to always be in the viewport */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #FFF; /* Solid white background */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 100; /* Makes sure the popup is above the overlay */
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Dark overlay */
+  z-index: 99; /* Below the OTP popup but above other content */
+  display: none; /* Initially hidden */
+}
+
+.modal-overlay.active {
+  display: block; /* Display overlay when active */
 }

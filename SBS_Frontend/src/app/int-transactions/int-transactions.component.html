@@ -1,4 +1,9 @@
-<app-intheader></app-intheader>
+<ng-container *ngIf="getUserRole() === userRoles.internal">
+    <app-intheader></app-intheader>
+</ng-container>
+<ng-container *ngIf="getUserRole() === userRoles.admin">
+    <app-header-admin></app-header-admin>
+</ng-container>
 <div class="container">
     <input type="text" [(ngModel)]="accountNumber" placeholder="Enter account number">
     <button class="btn-submit" (click)="onSubmit()">Submit</button>
@@ -18,7 +23,7 @@
                 <th>Amount</th>
                 <th>Created Time</th>
                 <th>Status</th>
-                <th>Actions</th>
+                <th *ngIf="getUserRole() === userRoles.admin">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -30,9 +35,12 @@
                 <td>{{ transaction?.amount }}</td>
                 <td>{{ transaction?.createdtime }}</td>
                 <td>{{ transaction?.status }}</td>
-                <td>
+                <td *ngIf="getUserRole() === userRoles.admin">
                     <button class="btn-edit" (click)="updateTransaction(transaction)">Edit</button>
                 </td>
+                <!-- <td>
+                    <button class="btn-edit" (click)="updateTransaction(transaction)">Edit</button>
+                </td> -->
             </tr>
         </tbody>
     </table>

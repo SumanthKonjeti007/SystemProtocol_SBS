@@ -24,6 +24,7 @@ import { IntUpdateProfileComponent } from './components/int-update-profile/int-u
 import { IntTransactionsComponent } from './int-transactions/int-transactions.component';
 import { EditTransactionComponent } from './edit-transaction/edit-transaction.component';
 import { OrderComponent } from './components/orders/orders.component';
+import { UserActivityComponent } from './components/user-activity/user-activity.component';
 const routes: Routes = [
   {
     path:'login',
@@ -105,9 +106,14 @@ const routes: Routes = [
     component: OrderComponent
   },
   {
+    path:'user-activity',
+    component: UserActivityComponent
+  },
+  {
     path:'', redirectTo:'register',pathMatch:'full'
     
   },
+  
   // Adding routes for transaction management
   { path: 'intuser-home', 
   component: InternalUserHomeComponent },

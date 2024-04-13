@@ -14,15 +14,13 @@ export class IntTransactionsComponent implements OnInit {
   accountNumber: string = '';
   transactions: any[] = [];
   showAll: boolean = false;
-  
-
+  userRoles: typeof UserRoles = UserRoles; 
   
   constructor(private transactionService: TransactionService, private router: Router, private jwtHelper: JwtHelperService) { }
  
   ngOnInit(): void {
-    this.jwtHelper.checkSessionValidity(UserRoles.internal);
+    this.jwtHelper.checkSessionValidityMultiple(UserRoles.internal,UserRoles.admin);
      
-      
   }
 
 
@@ -47,4 +45,14 @@ export class IntTransactionsComponent implements OnInit {
     console.log(transaction);
     this.router.navigate(['edit-Transaction'], { state: { transaction: transaction } });
   }
+  getUserRole(): number {
+    const token = localStorage.getItem('jwtToken') || '{}';
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    if (decodedToken && decodedToken.role) {
+        return decodedToken.role;
+    } else {
+        return 0; // or any default role you prefer
+    }
+}
+
 }

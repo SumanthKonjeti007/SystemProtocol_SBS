@@ -93,6 +93,18 @@ public class UserController {
         }
     }
 
+    @PostMapping("/generate-otp")
+    @CrossOrigin(origins = "*")
+//    @JwtTokenRequired
+    public ResponseEntity<String> generateOtp(@RequestBody String email) {
+
+        if (userService.generate(email)) {
+            return ResponseEntity.ok("OTP sent.");
+        } else {
+            return ResponseEntity.badRequest().body("OTP delivery failed.");
+        }
+    }
+
     @GetMapping("/userProfile")
     @JwtTokenRequired
     @CrossOrigin(origins = "*")

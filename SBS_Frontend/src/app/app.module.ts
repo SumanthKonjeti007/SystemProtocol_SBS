@@ -56,6 +56,7 @@ import { IntUpdateProfileComponent } from './components/int-update-profile/int-u
 import { EditTransactionComponent } from './edit-transaction/edit-transaction.component';
 import { JwtHelperService } from './services/jwt-helper.service';
 import { OrderComponent } from './components/orders/orders.component';
+import { UserActivityComponent } from './components/user-activity/user-activity.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +82,8 @@ import { OrderComponent } from './components/orders/orders.component';
     IntUpdateProfileComponent,
     IntTransactionsComponent,
     EditTransactionComponent,
-    OrderComponent
+    OrderComponent,
+    UserActivityComponent
   ],
   imports: [
     BrowserModule,
