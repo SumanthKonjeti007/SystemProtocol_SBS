@@ -1,0 +1,20 @@
+<app-header></app-header>
+<table>
+  <thead>
+    <tr>
+      <th>Account</th>
+      <th>Activity</th>
+      <th>Last Modified Time</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let transaction of transactions">
+      <td>{{ transaction.senderAcc?.accountNumber}}</td>
+      <td>{{ transaction.transactionType }}</td>
+      <td>{{ transaction.lastModifiedtime | date: 'medium' }}</td>
+      <td>{{ transaction.status }}</td>
+    </tr>
+  </tbody>
+</table>
+

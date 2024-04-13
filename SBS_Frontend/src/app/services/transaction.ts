@@ -3,17 +3,17 @@ import { account } from './account'; // Adjust the import path as necessary
 
 export class transaction {
 
-  transactionId?: string;
-  user?: user;
+  transactionId!: string;
+  user!: user;
   senderAcc!: account;
   receiverAcc!: account;
-  transactionType?: string ;
-  amount?: string;
-  createdBy?: string;
-  createdtime?: Date;
-  lastModifiedBy?: string;
-  lastModifiedtime?: Date;
-  status?: string;
+  transactionType!: string ;
+  amount!: string;
+  createdBy!: string;
+  createdtime!: Date;
+  lastModifiedBy!: string;
+  lastModifiedtime!: Date;
+  status!: string;
 
   constructor(
     user: user,

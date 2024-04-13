@@ -188,4 +188,18 @@ public class UserService implements Iuser {
         }
 
     }
+
+    public boolean generate(String email) {
+        try {
+            String otp = generateOtp();
+            System.out.println(otp);
+            otpMap.put(email, otp);
+            sendOtpEmail(email, otp);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
+    }
+
 }

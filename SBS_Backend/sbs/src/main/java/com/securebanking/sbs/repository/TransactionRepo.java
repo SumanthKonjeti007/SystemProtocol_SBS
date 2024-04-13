@@ -15,11 +15,15 @@ public interface TransactionRepo extends JpaRepository<Transaction, Integer> {
     @Query("SELECT t FROM Transaction t WHERE t.senderAcc = :account AND t.status = :status")
     List<Transaction> findByAccountAndStatus(@Param("account") Account account, @Param("status") String status);
 
-    @Query("SELECT t FROM Transaction t WHERE t.user.userId = :id")
+    @Query("SELECT t FROM Transaction t WHERE t.user.userId = :id and t.transactionType not in ('DELETE')")
     List<Transaction> findAllTransactionsByAccountId(Integer id);
 
-    @Query("SELECT t FROM Transaction t WHERE t.senderAcc.accountId = :accId or t.receiverAcc.accountId = :accId")
+    @Query("SELECT t FROM Transaction t WHERE t.senderAcc.accountId = :accId or t.receiverAcc.accountId = :accId and t.transactionType not in ('DELETE')")
     List<Transaction> findAllTransactionsByAccountNumber(Integer accId);
 
+    @Query("SELECT t FROM Transaction t WHERE t.transactionType not in ('DELETE')")
+    List<Transaction> findAllTransactions();
 
+    @Query("SELECT t FROM Transaction t WHERE t.transactionType not in ('CREDIT','DEBIT') AND t.user.userId = :id")
+    List<Transaction> getActivityById(Integer id);
 }

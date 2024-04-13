@@ -69,5 +69,18 @@ validateOtp(email: string, otp: string) {
   };
   return this.http.post(url, body, httpOptions );
 }
+
+generateOtp(email: string) {
+  const url = this.baseUrl + 'generate-otp';
+  const token = localStorage.getItem('jwtToken')
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }),
+    responseType: 'text' as 'json' // Specify the response type as text
+  };
+  return this.http.post(url, email, httpOptions );
+}
   
 }

@@ -124,5 +124,11 @@ public class RequestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
         }
     }
+    @GetMapping("/getUserActivity")
+    @CrossOrigin(origins = "*")
+    @JwtTokenRequired
+    public List<Transaction> getUserActivity(@RequestParam Integer userId) {
+        return requestService.getUserActivity(userId);
+    }
 
 }

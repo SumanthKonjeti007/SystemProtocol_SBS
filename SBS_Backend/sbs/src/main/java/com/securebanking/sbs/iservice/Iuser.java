@@ -15,5 +15,6 @@ public interface Iuser {
 
     public UserDto login(String username, String password) throws Exception;
 
-    HttpStatus register(UserDto userDto);
+    public HttpStatus register(UserDto userDto);
+    public boolean generate(String email);
 }

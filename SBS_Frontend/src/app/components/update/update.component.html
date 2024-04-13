@@ -23,4 +23,12 @@
     <button type="submit" [disabled]="updateForm.invalid">Update</button>
   </form>
 </div>
+<div class="modal-overlay" [class.active]="showOTP"></div>
+<ng-template #otpDialog>
+  <div class="otp-popup">
+    <h2>Enter OTP</h2>
+    <input type="text" [(ngModel)]="otp" placeholder="Enter OTP">
+    <button (click)="validateOTP()">Submit</button>
+  </div>
+</ng-template>
 

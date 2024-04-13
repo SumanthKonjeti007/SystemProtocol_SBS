@@ -19,7 +19,7 @@ export class EditTransactionComponent implements OnInit {
   constructor(private route: ActivatedRoute, private editService: EditService, private router: Router, private jwtHelper: JwtHelperService) { }
  
   ngOnInit(): void {
-    this.jwtHelper.checkSessionValidity(UserRoles.internal);
+    this.jwtHelper.checkSessionValidity(UserRoles.admin);
       this.transaction = history.state.transaction;
       console.log(this.transaction)
       

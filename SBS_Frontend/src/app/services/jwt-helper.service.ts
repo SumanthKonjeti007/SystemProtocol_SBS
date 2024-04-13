@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
 export class JwtHelperService {
   constructor(private router: Router) {}
 
-  decodeToken(token: string): DecodedToken | null {
-    try {
+  decodeToken(token: string): DecodedToken  {
+    // try {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       return {
         userId: decodedToken.userId,
@@ -18,10 +18,10 @@ export class JwtHelperService {
         iat: decodedToken.iat,
         role: decodedToken.role
       };
-    } catch (error) {
-      console.error('Error decoding token:', error);
-      return null;
-    }
+    // } catch (error) {
+    //   console.error('Error decoding token:', error);
+     
+    // }
   }
 
   removeToken(token: string): void {
@@ -49,6 +49,18 @@ export class JwtHelperService {
     }
     return true;
   }
+
+  checkSessionValidityMultiple(role1: number | undefined, role2: number | undefined): Boolean {
+    const token = localStorage.getItem('jwtToken')|| '{}';
+    const decodedToken = this.decodeToken(token)
+    if (token && this.isTokenExpired(token) || (role1 != decodedToken?.role && role2 != decodedToken?.role)) {
+      localStorage.removeItem('jwtToken');
+      this.router.navigate(['/login']);
+      return false;
+    }
+    return true;
+  }
+
 }
 interface DecodedToken {
   userId: number;

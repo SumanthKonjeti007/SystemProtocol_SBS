@@ -17,10 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class RequestService implements IRequest {
@@ -47,7 +44,6 @@ public class RequestService implements IRequest {
 
         return transactionAuthorizationDto;
     }
-//    transactionId,user,Acc-recAcc,tranctiontype,amount, status
 
     @Autowired
     private UserProfileUpdateRequestRepo userProfileUpdateRequestRepo;
@@ -270,7 +266,8 @@ public TransactionDto createTransactionRequest(TransactionDto transactionDto) {
     }
 
     public List<Transaction> getAllTransactions() {
-        List<Transaction> transactions = transactionRepo.findAll();
+//        List<Transaction> transactions = transactionRepo.findAll();
+        List<Transaction> transactions = transactionRepo.findAllTransactions();
 //        List<TransactionDto> transactionsDto = new ArrayList<>();
 //        transactions.forEach(req -> {
 //            TransactionDto transaction = new TransactionDto();
@@ -293,6 +290,26 @@ public TransactionDto createTransactionRequest(TransactionDto transactionDto) {
     public List<Transaction> getAllTransactionsUsingaccountNumber(String accNumber) {
         Account account = accountRepo.findbyaccountnumber(accNumber);
         return transactionRepo.findAllTransactionsByAccountNumber(account.getAccountId());
+    }
+
+    public List<Transaction> getUserActivity(Integer id) {
+        List<Transaction> transactions = transactionRepo.getActivityById(id);
+        List<TransactionDto> transactionsDto = new ArrayList<>();
+        transactions.forEach(req -> {
+            TransactionDto transaction = new TransactionDto();
+            BeanUtils.copyProperties(req,transaction);
+            User user = req.getUser();
+            user.setPasswordHash(null);
+//            UserRole userRole = user.getRole();
+//            Set<User> empty = new HashSet<>();
+//            userRole.setUsers(empty);
+//            user.setRole(userRole);
+            req.setUser(user);
+            transactionsDto.add(transaction);
+        });
+        return transactionRepo.getActivityById(id);
+
+
     }
 
 
