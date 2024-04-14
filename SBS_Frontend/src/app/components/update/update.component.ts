@@ -31,7 +31,7 @@ export class UpdateComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private userService: UserService,private router: Router, private jwtHelper: JwtHelperService, private dialog: MatDialog, private registerService:RegisterService) {}
 
   ngOnInit() {
-    if (this.jwtHelper.checkSessionValidity(UserRoles.customer)){
+    if (this.jwtHelper.checkSessionValidityMultiple(UserRoles.customer,UserRoles.merchant)){
     this.userData = history.state.userData;
     this.initForm();
   }

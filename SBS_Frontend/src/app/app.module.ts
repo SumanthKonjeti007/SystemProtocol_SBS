@@ -23,6 +23,7 @@ import { CapitalizePipe } from './capitalize.pipe';
 import { CardModule } from 'primeng/card';
 import { ToastrModule } from 'ngx-toastr';
 import { InputTextModule } from 'primeng/inputtext';
+import { RadioButtonModule } from 'primeng/radiobutton';
 //import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { Observable } from 'rxjs';
@@ -57,6 +58,8 @@ import { EditTransactionComponent } from './edit-transaction/edit-transaction.co
 import { JwtHelperService } from './services/jwt-helper.service';
 import { OrderComponent } from './components/orders/orders.component';
 import { UserActivityComponent } from './components/user-activity/user-activity.component';
+import { MerchantRequestsComponent } from './components/merchantRequests/merchantRequests.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,7 +86,8 @@ import { UserActivityComponent } from './components/user-activity/user-activity.
     IntTransactionsComponent,
     EditTransactionComponent,
     OrderComponent,
-    UserActivityComponent
+    UserActivityComponent,
+    MerchantRequestsComponent
   ],
   imports: [
     BrowserModule,
@@ -99,7 +103,8 @@ import { UserActivityComponent } from './components/user-activity/user-activity.
     CommonModule,
     SharedModule,
     InternalUserModule,
-    TransactionListModule
+    TransactionListModule,
+    RadioButtonModule
     //NgbModule,
   ],
   

@@ -4,6 +4,11 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { account } from './account'; // Adjust the import path as necessary
 
+// Interface to reflect the expected structure of the backend response
+interface AccountResponse {
+  accounts: account[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,25 +17,10 @@ export class AccountService {
 
   constructor(private http: HttpClient) {}
 
-  // getAllAccounts(userId: number): Observable<account[]> {
-  //   // userId = 4;
-  //   const url = `${this.baseUrl}/user/${userId}/accountDetails`; // Dynamic URL including the userId
-
-  //   return this.http.get<account[]>(url)
-  //     .pipe(
-  //       tap((accounts: account[]) => console.log('Fetched Accounts:', accounts)),
-  //       catchError((error: any) => {
-  //           console.error('Error from backend:', error);
-  //           return throwError(error);
-  //         })
-  //     );
-  // }
-
-
-
-getAllAccounts(userId: number): Observable<account[]> {
+  // Method updated to return an Observable of AccountResponse
+  getAllAccounts(userId: number): Observable<AccountResponse> {
     const url = `${this.baseUrl}/user/${userId}/accountDetails`; // Dynamic URL including the userId
-    const token = localStorage.getItem('jwtToken')
+    const token = localStorage.getItem('jwtToken');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -38,15 +28,16 @@ getAllAccounts(userId: number): Observable<account[]> {
       })
     };
 
-    return this.http.get<account[]>(url, httpOptions)
+    return this.http.get<AccountResponse>(url, httpOptions)
       .pipe(
-        tap((accounts: account[]) => console.log('Fetched Accounts:', accounts)),
+        tap(response => console.log('Fetched Accounts:', response.accounts)),
         catchError((error: any) => {
             console.error('Error from backend:', error);
-            return throwError(error);
-          })
+            return throwError(() => new Error('An error occurred; please try again later.'));
+        })
       );
-}
+  }
+
 
   
   initiateDeleteRequest(userId: number, accountNumber: string): Observable<any> {

@@ -13,7 +13,7 @@ export class FundsComponent {
   constructor(private router: Router, private jwtHelper: JwtHelperService) {}
 
   ngOnInit(): void {
-    if (this.jwtHelper.checkSessionValidity(UserRoles.customer)){
+    if (this.jwtHelper.checkSessionValidityMultiple(UserRoles.customer,UserRoles.merchant)){
     }
   }
 

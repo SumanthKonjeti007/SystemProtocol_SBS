@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.jwtHelper.checkSessionValidity(UserRoles.customer)){
+    if (this.jwtHelper.checkSessionValidityMultiple(UserRoles.customer,UserRoles.merchant)){
     this.token = localStorage.getItem('jwtToken') || '{}';
     
     const decodedToken = this.jwtHelper.decodeToken(this.token);

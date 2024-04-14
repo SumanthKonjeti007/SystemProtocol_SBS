@@ -39,6 +39,17 @@ export class JwtHelperService {
     return expirationDate.valueOf() <= new Date().valueOf();
   }
 
+  // checkSessionValidityMultiple(role1: number | undefined, role2: number | undefined): Boolean {
+  //   const token = localStorage.getItem('jwtToken')|| '{}';
+  //   const decodedToken = this.decodeToken(token)
+  //   if (token && this.isTokenExpired(token) || (role1 != decodedToken?.role && role2 != decodedToken?.role)) {
+  //     localStorage.removeItem('jwtToken');
+  //     this.router.navigate(['/login']);
+  //     return false;
+  //   }
+  //   return true;
+  // }
+
   checkSessionValidity(role: number | undefined): Boolean {
     const token = localStorage.getItem('jwtToken')|| '{}';
     const decodedToken = this.decodeToken(token)

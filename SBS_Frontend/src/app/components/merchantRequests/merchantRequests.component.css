@@ -1,0 +1,178 @@
+/* component-name.component.css */
+
+/* General table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  thead {
+    background-color: #f4f4f4;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Zebra striping for rows */
+  tbody tr:nth-child(odd) {
+    background-color: #fbfbfb;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #ffffff;
+  }
+  
+  /* Hover effect for rows */
+  tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Header styles */
+  th {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Order ID column style */
+  th:first-child, td:first-child {
+    width: 10%;
+  }
+  
+  /* Account Number column style */
+  th:nth-child(2), td:nth-child(2) {
+    width: 30%;
+  }
+  
+  /* Status column style */
+  th:nth-child(3), td:nth-child(3) {
+    width: 20%;
+  }
+  
+  /* Amount column style */
+  th:nth-child(4), td:nth-child(4) {
+    width: 20%;
+  }
+  
+  /* Button styles */
+  button.send-btn {
+    padding: 6px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  button.send-btn:hover {
+    background-color: #45a049;
+  }
+  
+  button.send-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  /* Add this rule if you plan to show the action button later */
+  /*
+  td:last-child {
+    width: 20%;
+    text-align: center;
+  }
+  */
+  
+  /* Add this if you want the table to be more responsive on smaller screens */
+  @media screen and (max-width: 600px) {
+    thead {
+      display: none;
+    }
+  
+    table, tbody, tr, td {
+      display: block;
+      width: 100%;
+    }
+  
+    tr {
+      margin-bottom: 15px;
+    }
+  
+    td {
+      text-align: right;
+      padding-left: 50%;
+      text-align: right;
+      position: relative;
+    }
+  
+    td:before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      width: 50%;
+      padding-left: 15px;
+      font-weight: bold;
+      text-align: left;
+    }
+  }
+  
+  /* Button styles */
+button.send-btn {
+  padding: 10px 15px;
+  background-color: #008CBA; /* A more vibrant blue */
+  color: white;
+  border: none;
+  border-radius: 5px; /* Slightly rounded corners for a modern look */
+  cursor: pointer;
+  font-size: 16px; /* Larger text */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2); /* Subtle shadow for depth */
+  margin-right: 10px; /* Ensure it doesn't stick to other elements */
+}
+
+button.send-btn:hover {
+  background-color: #005f73; /* Darker shade on hover */
+}
+
+button.send-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  color: #666666; /* Greyed out text to indicate it's disabled */
+  box-shadow: none; /* No shadow when disabled */
+}
+
+/* Responsive Table Styles */
+@media screen and (max-width: 600px) {
+  /* ... Your existing styles ... */
+
+  td:before {
+    /* Adjustments to font for smaller screens */
+    font-size: 14px; /* Smaller font size on mobile */
+    padding-left: 10px; /* Adjust padding */
+  }
+  
+  button.send-btn {
+    padding: 8px 10px; /* Smaller button on mobile */
+    font-size: 14px; /* Smaller font size on mobile */
+  }
+}
+
+button.send-btn:active {
+  transform: scale(0.98); /* Slightly shrink the button when clicked */
+}
+
+button.send-btn:focus {
+  outline: none; /* Remove the default outline on focus */
+  box-shadow: 0 0 0 2px #005f73; /* Custom focus style */
+}
+
+
+button.send-btn:disabled {
+  background-color: #cccccc; /* Dull grey background */
+  color: #666666; /* Dull text color */
+  cursor: not-allowed; /* Cursor to indicate the button is inactive */
+  box-shadow: none; /* No shadow to flatten the button */
+  border: 1px solid #999999; /* Optional: add a border to reinforce the dull look */
+}

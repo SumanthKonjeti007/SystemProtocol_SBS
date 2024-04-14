@@ -78,6 +78,21 @@
               </small>
           </div>
 
+          <div class="field field-account-type">
+            <label>Account Type</label>
+            <div class="p-field-radiobutton">
+              <input type="radio" id="type1" name="accountType" value="customer" formControlName="accountType" class="custom-radio-button">
+              <label for="type1">Personal</label>
+            </div>
+            <div class="p-field-radiobutton">
+              <input type="radio" id="type2" name="accountType" value="merchant" formControlName="accountType" class="custom-radio-button">
+              <label for="type2">Merchant</label>
+            </div>
+            <small *ngIf="accountType.invalid && (accountType.dirty || accountType.touched)" class="block p-error">
+                <div *ngIf="accountType.errors?.['required']">Selecting an account type is required.</div>
+            </small>
+          </div>
+
           <!-- Original Button -->
           <button type="submit" (click)="signup(registerForm.value)">REGISTER</button>
 

@@ -5,6 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RegisterService } from '../../services/register.service';
 import { JwtHelperService } from '../../services/jwt-helper.service'; 
+import { UserRoles } from '../../user-roles';
 
 
 @Component({
@@ -49,12 +50,12 @@ export class OtpVerificationComponent implements OnInit {
           
         console.log(decodedToken);
         if (decodedToken?.role) {
-          if (decodedToken.role === 2) {
+          if (decodedToken.role === UserRoles.customer || decodedToken.role === UserRoles.merchant) {
             this.router.navigate(['/home']);
-          } else if (decodedToken.role === 6) {
+          } else if (decodedToken.role === UserRoles.internal) {
             this.router.navigate(['/intuser-home']);
           }
-            else if (decodedToken.role === 4) {
+            else if (decodedToken.role === UserRoles.admin) {
               this.router.navigate(['/home-admin']);
             
           }

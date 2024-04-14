@@ -83,3 +83,48 @@ p-card {
   align-self: center; /* Centers the button in the flex container */
   width: 100%; /* Adjust the width as needed */
 }
+
+/* Add these styles within your existing CSS */
+
+/* Style adjustments for the account type radio buttons */
+.field .p-field-radiobutton {
+  display: flex;
+  align-items: center; /* Vertically aligns the radio button with its label */
+  margin-bottom: 8px; /* Provides consistent spacing below each option */
+}
+
+.field .p-field-radiobutton label {
+  margin-left: 8px; /* Spacing between the radio button and the label */
+  color: #497174; /* Text color to match your scheme */
+}
+
+/* Styles to improve spacing and layout of the radio button group */
+.field-account-type {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Aligns radio buttons to the start of the flex container */
+}
+
+/* Optionally, if you wish to use custom radio buttons for a more consistent look */
+.custom-radio-button {
+  appearance: none; /* Hides the default radio button appearance */
+  width: 16px; /* Size of the custom radio button */
+  height: 16px; /* Size of the custom radio button */
+  border: 2px solid #497174; /* Border color to match your scheme */
+  border-radius: 50%; /* Makes it circular */
+  background-color: #EFF5F5; /* Background to match your input fields */
+  cursor: pointer; /* Changes the cursor to a pointer on hover */
+  position: relative; /* Positioning context for the inner circle */
+  margin-right: 8px; /* Spacing between the button and label */
+}
+
+.custom-radio-button:checked::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 10px;
+  height: 10px;
+  background-color: #EB6440; /* Color when checked to match your theme */
+  border-radius: 50%;
+}

@@ -16,7 +16,7 @@ export class TransactionActionComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router,private jwtHelper: JwtHelperService) { }
 
   ngOnInit(): void {
-    if (this.jwtHelper.checkSessionValidity(UserRoles.customer)){
+    if (this.jwtHelper.checkSessionValidityMultiple(UserRoles.customer,UserRoles.merchant)){
     this.action = this.route.snapshot.paramMap.get('action');
     this.id = this.route.snapshot.paramMap.get('id');
   }

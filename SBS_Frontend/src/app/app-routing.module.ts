@@ -25,6 +25,8 @@ import { IntTransactionsComponent } from './int-transactions/int-transactions.co
 import { EditTransactionComponent } from './edit-transaction/edit-transaction.component';
 import { OrderComponent } from './components/orders/orders.component';
 import { UserActivityComponent } from './components/user-activity/user-activity.component';
+import { MerchantRequestsComponent } from './components/merchantRequests/merchantRequests.component';
+
 const routes: Routes = [
   {
     path:'login',
@@ -108,6 +110,14 @@ const routes: Routes = [
   {
     path:'user-activity',
     component: UserActivityComponent
+  },
+  {
+    path:'request-payment',
+    component: OrderComponent
+  },
+  {
+    path: 'merchant-requests',
+    component: MerchantRequestsComponent
   },
   {
     path:'', redirectTo:'register',pathMatch:'full'

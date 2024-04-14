@@ -12,7 +12,8 @@ export class HomeComponent {
   constructor(private jwtHelper: JwtHelperService, private router: Router) {}
 
   ngOnInit(): void {
-    this.jwtHelper.checkSessionValidity(UserRoles.customer);
+    //this.jwtHelper.checkSessionValidity(UserRoles.customer);
+    this.jwtHelper.checkSessionValidityMultiple(UserRoles.customer,UserRoles.merchant);
 
 }
 }
