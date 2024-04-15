@@ -1,5 +1,6 @@
 package com.securebanking.sbs.controller.service;
 
+import com.securebanking.sbs.dto.AccountDto;
 import com.securebanking.sbs.dto.UserDto;
 import com.securebanking.sbs.dto.UserRoleDto;
 import com.securebanking.sbs.exception.InvalidCredentialsException;
@@ -31,6 +32,8 @@ public class UserService implements Iuser {
 
     @Autowired
     private UserRoleRepo userRoleRepo;
+    @Autowired
+    AccountService accountService;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -181,6 +184,12 @@ public class UserService implements Iuser {
 
         user=userRepo.save(user);
         if (user != null){
+            AccountDto acc = new AccountDto();
+            acc.setUserId(user.getUserId());
+            acc.setBalance("150");
+            acc.setStatus("ACTIVE");
+            acc.setAccountType("SAVINGS");
+            accountService.createAccount(acc);
             return HttpStatus.OK;
         }
         else {

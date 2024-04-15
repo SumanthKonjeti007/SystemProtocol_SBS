@@ -13,6 +13,7 @@ interface AccountResponse {
   providedIn: 'root'
 })
 export class AccountService {
+  
   private baseUrl = 'http://localhost:8080/api/v1/account'; // Base URL to your API
 
   constructor(private http: HttpClient) {}
@@ -37,7 +38,19 @@ export class AccountService {
         })
       );
   }
+  createAccount(acc: any) {
 
+    const url = `${this.baseUrl}/createAccount`; // Dynamic URL including the userId
+    const token = localStorage.getItem('jwtToken');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }),  responseType: 'text' as 'json'
+    };
+    console.log(acc);
+    return this.http.post(url, acc, httpOptions );
+  }
 
   
   initiateDeleteRequest(userId: number, accountNumber: string): Observable<any> {

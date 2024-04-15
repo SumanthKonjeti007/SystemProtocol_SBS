@@ -21,10 +21,10 @@
     <div class="dropdown">
       <button class="dropbtn">Transactions</button>
       <div class="dropdown-content">
-        <a href="/credit">Credit</a>
+        <a href="/credit">Transfer Money</a>
         <a href="/tran-his">Transaction History</a>
         <a href="/merchant-requests" *ngIf="getUserRole() === userRoles.customer">Merchant/Client requests</a>
-        <a href="/payment-gateway" *ngIf="getUserRole() === userRoles.customer">Send Amount</a>
+        <!-- <a href="/payment-gateway" *ngIf="getUserRole() === userRoles.customer">Send Amount</a> -->
         <a href="/request-payment" *ngIf="getUserRole() === userRoles.merchant">Request Payment</a>
       </div>
     </div>

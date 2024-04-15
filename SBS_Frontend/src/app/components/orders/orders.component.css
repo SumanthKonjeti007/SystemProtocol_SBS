@@ -1,41 +1,79 @@
+/* Styles for the container */
 .container {
-    max-width: 400px;
-    margin: 20px auto;
-    padding: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .form-control {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .btn-primary {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .btn-primary[disabled] {
-    background-color: #a0a0a0;
-    cursor: not-allowed;
-  }
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for headings */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Styles for form groups */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Styles for form labels */
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Styles for form inputs */
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Styles for buttons */
+.btn-primary {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+/* Styles for disabled buttons */
+.btn-primary[disabled] {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+/* Styles for the OTP dialog */
+.otp-popup {
+  text-align: center;
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.otp-popup h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.otp-popup input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.otp-popup button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}

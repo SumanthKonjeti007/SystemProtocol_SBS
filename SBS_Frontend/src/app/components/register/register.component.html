@@ -77,8 +77,8 @@
                   Password should match
               </small>
           </div>
-
-          <div class="field field-account-type">
+          
+          <div class="field field-account-type" *ngIf="getUserRole() !== userRoles.admin">
             <label>Account Type</label>
             <div class="p-field-radiobutton">
               <input type="radio" id="type1" name="accountType" value="customer" formControlName="accountType" class="custom-radio-button">

@@ -13,6 +13,7 @@ import { UserRoles } from '../../user-roles';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit{
+  userRoles = UserRoles;
   fromAdmin: boolean = false
   roleId= UserRoles.customer ;
   
@@ -159,6 +160,15 @@ ngOnInit(): void {
     }
   );
 
+}
+getUserRole(): number {
+  const token = localStorage.getItem('jwtToken') || '{}';
+  const decodedToken = this.jwtHelper.decodeToken(token);
+  if (decodedToken && decodedToken.role) {
+    return decodedToken.role;
+  } else {
+    return 0; // or any default role you prefer
+  }
 }
   
   

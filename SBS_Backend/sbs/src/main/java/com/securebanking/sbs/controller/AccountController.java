@@ -31,7 +31,7 @@ public class AccountController {
     private RequestService requestService;
     @PostMapping("/createAccount")
     @CrossOrigin(origins = "*")
-    //@JwtTokenRequired
+    @JwtTokenRequired
     public ResponseEntity<String> createAccount(@RequestBody AccountDto accountDto) {
         accountService.createAccount(accountDto);
         return new ResponseEntity<>("Account created successfully.", HttpStatus.CREATED);
