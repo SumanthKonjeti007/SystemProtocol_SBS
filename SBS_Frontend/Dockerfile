@@ -1,48 +1,58 @@
-# # STEP-1 BUILD
-# # Defining node image and giving alias as node-helper
-# # It's better to define version otherwise me might face issue in future build
+# FROM node:alpine
 
-# FROM node:14-alpine3.15 as node-helper
+# WORKDIR /usr/src/app
 
-# #Accepting build-arg to create environment specific build
-# #it is useful when we have multiple environment (e.g: dev, tst, staging, prod)
-# #default value is development
-# ARG build_env=development
+# COPY . /usr/src/app
 
-# #Creating virtual directory inside docker image
-# WORKDIR /app
+# RUN npm install -g @angular/cli
 
-# RUN npm cache clean --force
-
-# #Copying file from local machine to virtual docker image directory
-# COPY . .
-
-# #installing deps for project
 # RUN npm install
 
-# #creating angular build
-# RUN /Users/hkonjeti/Documents/IUB/Sem2/System protocol/Project/Phase3/SystemProtocol_SBS/SBS_Frontend/node_modules/@angular/cli/bin/ng build --configuration=$build_env
+# CMD ["ng", "serve", "--host", "0.0.0.0"]
 
-# #STEP-2 RUN
-# #Defining nginx img 
-# FROM nginx:1.20 as ngx
 
-# #copying compiled code from dist to nginx folder for serving
-# COPY --from=node-helper /app/dist/angular-docker-blog /usr/share/nginx/html
 
-# #copying nginx config from local to image
-# COPY /nginx.conf /etc/nginx/conf.d/default.conf
+# Stage 1: Build the Angular application
+FROM node:18.13 AS builder
 
-# #exposing internal port
-# EXPOSE 80
-FROM node:alpine
+# Set the working directory
+WORKDIR /app
 
-WORKDIR /usr/src/app
+# Add the package.json and package-lock.json
+COPY package*.json ./
 
-COPY . /usr/src/app
-
-RUN npm install -g @angular/cli
-
+# Install all dependencies
 RUN npm install
 
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+# Copy the rest of the app
+COPY . .
+
+# Build the Angular app
+RUN npm run build
+
+# Stage 2: Setup Nginx to serve the app
+FROM nginx:alpine
+
+# Remove the default server definition
+RUN rm /etc/nginx/conf.d/default.conf
+RUN chmod 777 /etc/nginx/
+
+# Copy SSL certificates
+COPY server.crt /etc/nginx/ssl/server.crt
+COPY server.key /etc/nginx/ssl/server.key
+
+# Copy the Nginx configuration
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Ensure permissions are correct
+RUN chmod 777 /etc/nginx/ssl/server.crt
+RUN chmod 777 /etc/nginx/ssl/server.key
+
+# Copy the built app from the previous stage
+COPY --from=builder /app/dist/bk-app/browser /usr/share/nginx/html
+
+# Expose HTTPS port
+EXPOSE 443
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]

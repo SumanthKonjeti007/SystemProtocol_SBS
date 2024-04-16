@@ -22,7 +22,7 @@ public class UserRoleController {
     }
 
     @GetMapping("/getUserRoles")
-    @JwtTokenRequired
+//    @JwtTokenRequired
     @CrossOrigin(origins = "*")
     public List<UserRoleDto> getAllUserRole(){
         return userRoleService.getUserRoles();

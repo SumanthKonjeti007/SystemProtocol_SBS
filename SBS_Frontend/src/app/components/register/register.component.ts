@@ -47,6 +47,7 @@ export class RegisterComponent implements OnInit{
 }
 ngOnInit(): void {
   // Initialization logic can go here if needed
+  console.log(this.getUserRole());
 }
 
 
@@ -161,14 +162,20 @@ ngOnInit(): void {
   );
 
 }
+
+
 getUserRole(): number {
-  const token = localStorage.getItem('jwtToken') || '{}';
-  const decodedToken = this.jwtHelper.decodeToken(token);
-  if (decodedToken && decodedToken.role) {
-    return decodedToken.role;
-  } else {
-    return 0; // or any default role you prefer
+  try{
+    console.log("hi")
+    const token = localStorage.getItem('jwtToken') || '{}';
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    if (decodedToken && decodedToken.role) {
+      return decodedToken.role;
+    }
+  }catch{
+    return 0;
   }
+  return 0;
 }
   
   

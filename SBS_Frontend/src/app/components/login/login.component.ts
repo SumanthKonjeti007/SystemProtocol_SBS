@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { user } from '../../services/user';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JwtHelperService } from '../../services/jwt-helper.service';
+import { userRole } from '../../services/userRole';
+import { UserRoles } from '../../user-roles';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -49,11 +51,16 @@ export class LoginComponent {
                 console.log('Decoded token:', decodedToken);
             
                 // Redirect based on user role or other conditions
+                if (decodedToken.role === UserRoles.internal){
+                  this.router.navigate(['/intuser-home']);
+                }
+                else{
                 if (decodedToken.email) {
                   this.router.navigate(['/otp-verification'], { queryParams: { email: decodedToken.email } });
                 } else {
                   this.router.navigate(['/home']);
                 }
+              }
               } else {
                 console.error('Failed to decode JWT token');
               }
