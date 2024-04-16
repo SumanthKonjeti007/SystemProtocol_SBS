@@ -95,7 +95,7 @@ public class UserController {
 
     @PostMapping("/generate-otp")
     @CrossOrigin(origins = "*")
-//    @JwtTokenRequired
+    @JwtTokenRequired
     public ResponseEntity<String> generateOtp(@RequestBody String email) {
 
         if (userService.generate(email)) {
@@ -149,4 +149,12 @@ public class UserController {
         }
 
     }
+
+    @GetMapping("/hello")
+    @CrossOrigin(origins = "*")
+    public String helloWorld() {
+        return "Welcome to Backend";
+    }
+
+
 }

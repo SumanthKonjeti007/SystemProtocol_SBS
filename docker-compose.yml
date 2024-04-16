@@ -1,0 +1,24 @@
+services:
+  sbs-database:
+    image: postgres:alpine
+    ports:
+      - "4003:5432"
+    environment:
+      POSTGRES_PASSWORD: secureBanking
+      POSTGRES_DB: secureBanking
+  primes-service:
+     image: sbs-service
+     build:
+        context: ./SBS_Backend/sbs
+        dockerfile: Dockerfile
+     container_name: sbs-service
+     ports:
+        - "4005:8080"
+     environment:
+        - server.port=8080
+        - spring.datasource.url=jdbc:postgresql://sbs-database:5432/secureBanking
+        - spring.datasource.username=postgres
+        - spring.datasource.password=secureBanking
+     restart: "always"
+     depends_on:
+        - sbs-database

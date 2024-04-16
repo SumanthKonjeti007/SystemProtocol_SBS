@@ -26,6 +26,7 @@ import { EditTransactionComponent } from './edit-transaction/edit-transaction.co
 import { OrderComponent } from './components/orders/orders.component';
 import { UserActivityComponent } from './components/user-activity/user-activity.component';
 import { MerchantRequestsComponent } from './components/merchantRequests/merchantRequests.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 const routes: Routes = [
   {
@@ -120,7 +121,7 @@ const routes: Routes = [
     component: MerchantRequestsComponent
   },
   {
-    path:'', redirectTo:'register',pathMatch:'full'
+    path:'', redirectTo:'LandingPage',pathMatch:'full'
     
   },
   
@@ -133,7 +134,12 @@ const routes: Routes = [
   component: TransactionActionComponent }, // Use a different path for transaction action
   { path: 'transaction/:action/:id', component: TransactionActionComponent },
   { path: 'int-update-profile', component: IntUpdateProfileComponent },
+  {
+    path:'LandingPage',
+    component:LandingPageComponent
+  },
   { path: '', redirectTo: 'intuser-home', pathMatch: 'full' },
+
 
   // Routes for user and internal user home pages with role-based redirection
   { path: 'login', component: LoginComponent },

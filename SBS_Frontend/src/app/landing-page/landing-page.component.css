@@ -1,0 +1,45 @@
+/* Basic styling for the landing page */
+.header {
+    background-color: #ca5733;  /* Reddish-brown */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.navigation button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #f8f9fa;  /* Light grey */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.navigation button:hover {
+    background-color: #ccc;  /* Medium grey */
+}
+
+.content {
+    position: relative; /* Position relative to allow absolute positioning within */
+    text-align: left; /* Left align the text within the container */
+    padding: 100px 50px; /* Ample padding on top and some on the sides */
+    background: url('../../assets/images/LandingPage.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: calc(100vh - 60px); /* Full height minus header height */
+    display: flex;
+    align-items: center; /* Align content vertically */
+    justify-content: flex-start; /* Align content to the left */
+}
+
+.content-text {
+    color: white; /* White color text for contrast */
+    font-weight: bold; /* Bold text */
+    font-size: 20px; /* Larger font size for better visibility */
+    max-width: 600px; /* Maximum width to contain the text block */
+     /* Semi-transparent background for the text */
+    padding: 20px; /* Padding inside the text background */
+    border-radius: 8px; /* Rounded corners for aesthetic */
+    box-shadow: (2px 2px 10px plum); /* Soft shadow for depth */
+}

@@ -57,6 +57,7 @@ import { IntUpdateProfileComponent } from './components/int-update-profile/int-u
 import { EditTransactionComponent } from './edit-transaction/edit-transaction.component';
 import { JwtHelperService } from './services/jwt-helper.service';
 import { OrderComponent } from './components/orders/orders.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 import { UserActivityComponent } from './components/user-activity/user-activity.component';
 import { MerchantRequestsComponent } from './components/merchantRequests/merchantRequests.component';
 
@@ -87,7 +88,8 @@ import { MerchantRequestsComponent } from './components/merchantRequests/merchan
     EditTransactionComponent,
     OrderComponent,
     UserActivityComponent,
-    MerchantRequestsComponent
+    MerchantRequestsComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,
