@@ -11,7 +11,7 @@ import { user } from './user'; // Adjust the import path as necessary
 })
 export class AdminService {
   
-  private baseUrl = 'http://localhost:8080/api/v1/';
+  private baseUrl = 'http://localhost:8081/api/v1/';
   constructor(private http: HttpClient) { }
   private token = localStorage.getItem('jwtToken') || null;
 

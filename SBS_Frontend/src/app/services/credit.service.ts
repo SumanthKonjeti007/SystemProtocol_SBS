@@ -8,7 +8,7 @@
 //   providedIn: 'root'
 // })
 // export class CreditService {
-//   private baseUrl = 'http://localhost:8080/api/v1/account/';
+//   private baseUrl = 'http://localhost:8081/api/v1/account/';
 //   constructor(private http: HttpClient) { }
 
 //   performTransaction(transactionType: 'CREDIT' | 'DEBIT', transactionData: transaction): Observable<any> {
@@ -41,7 +41,7 @@ import { transaction } from './transaction'; // Adjust the import path as necess
   providedIn: 'root'
 })
 export class CreditService {
-  private baseUrl = 'http://localhost:8080/api/v1/account/';
+  private baseUrl = 'http://localhost:8081/api/v1/account/';
   private token = localStorage.getItem('jwtToken') || null;
   constructor(private http: HttpClient) { }
 

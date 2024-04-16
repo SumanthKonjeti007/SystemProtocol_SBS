@@ -7,7 +7,7 @@ import { Order } from './orders'; // Import the correct type
   providedIn: 'root'
 })
 export class MerchantRequestsService {
-  private apiUrl = 'http://localhost:8080/api/payment/'; // Use your actual API URL
+  private apiUrl = 'http://localhost:8081/api/payment/'; // Use your actual API URL
   private token = localStorage.getItem('jwtToken') || null;
 
   constructor(private http: HttpClient) { }

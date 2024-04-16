@@ -9,7 +9,7 @@ import { transaction } from './transaction'; // Ensure this is the correct impor
   providedIn: 'root'
 })
 export class TransactionService {
-  private baseUrl = 'http://localhost:8080/api/v1/';
+  private baseUrl = 'http://localhost:8081/api/v1/';
   private token = localStorage.getItem('jwtToken') || null;
 
   constructor(private http: HttpClient) { }

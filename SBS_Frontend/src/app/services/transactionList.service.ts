@@ -9,7 +9,7 @@ import { transaction } from './transaction'; // Adjust the import path as necess
   providedIn: 'root'
 })
 export class TransactionListService {   
-    private baseUrl = 'http://localhost:8080/api/v1/transaction/';
+    private baseUrl = 'http://localhost:8081/api/v1/transaction/';
     constructor(private http: HttpClient) { }
     private token = localStorage.getItem('jwtToken') || null;
 

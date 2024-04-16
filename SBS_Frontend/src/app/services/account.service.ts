@@ -14,7 +14,7 @@ interface AccountResponse {
 })
 export class AccountService {
   
-  private baseUrl = 'http://localhost:8080/api/v1/account'; // Base URL to your API
+  private baseUrl = 'http://localhost:8081/api/v1/account'; // Base URL to your API
 
   constructor(private http: HttpClient) {}
 
