@@ -12,13 +12,13 @@ export interface OrderResponse {
   providedIn: 'root',
 })
 export class OrdersService {
-  private baseUrl = 'http://localhost:8081/api/payment/orders'; // Base URL for the payment API
+  private baseUrl = 'https://156.56.103.237:4005/api/payment/orders'; // Base URL for the payment API
 
   constructor(private http: HttpClient) {}
 
   // Method for merchants to request payment from customers
   createPaymentRequest(orderRequest: Order): Observable<any> {
-    return this.http.post<any>(`http://localhost:8081/api/payment/orders/requestPayment`, orderRequest);
+    return this.http.post<any>(`https://156.56.103.237:4005/api/payment/orders/requestPayment`, orderRequest);
   }
 
   // Method for customers to make payment to merchants
@@ -30,6 +30,6 @@ export class OrdersService {
       customerAccountNumber: customerAccount.accountNumber,
     };
     console.log("helloo", combinedRequest);
-    return this.http.post<any>(`http://localhost:8081/api/payment/orders/paymentGateway`, combinedRequest);
+    return this.http.post<any>(`https://156.56.103.237:4005/api/payment/orders/paymentGateway`, combinedRequest);
   }
 }

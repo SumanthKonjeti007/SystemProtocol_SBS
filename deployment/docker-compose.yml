@@ -2,7 +2,7 @@ services:
   sbs-database:
     image: postgres:alpine
     ports:
-      - "5432:5432"
+      - "4003:5432"
     environment:
       POSTGRES_PASSWORD: secureBanking
       POSTGRES_DB: secureBanking
@@ -13,9 +13,9 @@ services:
         dockerfile: Dockerfile
      container_name: sbs-service
      ports:
-        - "8080:8080"
+        - "4005:8443"
      environment:
-        - server.port=8080
+        - server.port=8443
         - spring.datasource.url=jdbc:postgresql://sbs-database:5432/secureBanking
         - spring.datasource.username=postgres
         - spring.datasource.password=secureBanking

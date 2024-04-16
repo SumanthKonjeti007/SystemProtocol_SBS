@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class ProfileRequestsService {
 
-  private baseUrl = 'http://localhost:8081/api/v1/';
+  private baseUrl = 'https://156.56.103.237:4005/api/v1/';
   private token = localStorage.getItem('jwtToken') || null;
   apiURL: any;
   

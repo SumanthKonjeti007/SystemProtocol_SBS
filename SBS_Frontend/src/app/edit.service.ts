@@ -7,7 +7,7 @@ import { transaction } from './services/transaction';
   providedIn: 'root'
 })
 export class EditService {
-  private baseUrl = 'http://localhost:8081/api/v1/transaction/';
+  private baseUrl = 'https://156.56.103.237:4005/api/v1/transaction/';
   private token = localStorage.getItem('jwtToken') || null;
 
   constructor(private http: HttpClient) { }
