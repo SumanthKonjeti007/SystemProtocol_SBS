@@ -1,4 +1,4 @@
-#SystemProtocol_SBS
+##SystemProtocol_SBS
 
 #This is a Secure Banking Application developed using AngularJS, Spring Boot, and PostgreSQL. Both the frontend and backend are dockerized and will be deployed in a production environment using Netlify and Heroku.
 
