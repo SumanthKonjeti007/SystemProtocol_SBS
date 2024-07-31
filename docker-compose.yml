@@ -6,6 +6,8 @@ services:
     environment:
       POSTGRES_PASSWORD: secureBanking
       POSTGRES_DB: secureBanking
+    volumes:
+      - ./deployment/SBS_Backend/db_init/init.sql:/docker-entrypoint-initdb.d/init.sql
   primes-service:
      image: sbs-service
      build:

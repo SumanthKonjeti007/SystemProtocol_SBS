@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserDetailsService {
-  private apiUrl = 'https://156.56.103.237:4005/api/v1'; // Replace with your actual API URL
+  private apiUrl = 'https://192.168.1.9:4005/api/v1'; // Replace with your actual API URL
   private token = localStorage.getItem('jwtToken') || null;
 
   constructor(private http: HttpClient) { }

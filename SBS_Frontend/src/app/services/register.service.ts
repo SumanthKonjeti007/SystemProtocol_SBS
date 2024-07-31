@@ -10,7 +10,7 @@ import { UserRoles } from '../user-roles';
 })
 export class RegisterService {
   private patch:any 
-  private baseUrl = 'https://156.56.103.237:4005/api/v1/';
+  private baseUrl = 'https://192.168.1.9:4005/api/v1/';
   httpOptions: any;
   
   constructor(private http: HttpClient, private router: Router) {}

@@ -14,7 +14,7 @@ interface AccountResponse {
 })
 export class AccountService {
   
-  private baseUrl = 'https://156.56.103.237:4005/api/v1/account'; // Base URL to your API
+  private baseUrl = 'https://192.168.1.9:4005/api/v1/account'; // Base URL to your API
 
   constructor(private http: HttpClient) {}
 
